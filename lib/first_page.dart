@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/constans/image_const.dart';
+import 'package:foodapp/first_page_class.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'main.dart';
@@ -16,6 +18,8 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
 
+  int onpageindex = 0;
+  PageController onpagecontroller=PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,27 +33,79 @@ class _FirstPageState extends State<FirstPage> {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Center(
-            child: Column(
 
-              children: [
-                Text("Order from your favourite",style: TextStyle(fontWeight: FontWeight.w600,fontSize: w*0.02),),
-                Text("stores or vendors",style: TextStyle(fontWeight: FontWeight.w600,fontSize: w*0.02),),
-              ],
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Image.asset(ImageConst.firstpageimage,width: w*0.2,),
+        children: [
+       SizedBox(
+         height: h*0.5,
+         child: PageView.builder(
+           onPageChanged: (value) {
+             onpageindex=value;
+             setState(() {
+
+             });
+           },
+          physics: BouncingScrollPhysics(),
+           controller: onpagecontroller,
+           padEnds: false,
+           itemCount:contents.length ,
+           scrollDirection: Axis.horizontal,
+           itemBuilder: (context, index) {
+           onpageindex=index;
+           return Column(
+             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+             children: [
+               Text(contents[index].text,
+               textAlign: TextAlign.center,
+                 style: TextStyle(
+                   fontWeight: FontWeight.w700,
+
+                 ),
+               ),
+               SizedBox(height: h*0.05,),
+               onpageindex!=2?SizedBox(
+                 height: h*0.3,
+                 width: w*1,
+                 child: Image(image: AssetImage(contents[index].image),),
+               ):Stack(
+                 children: [
+                   Positioned(
+                     bottom: w*0.001,
+                       right: w*0.25,
+                       child: Container(
+                         height: h*0.31,
+                         width: w*0.5,
+                         decoration: BoxDecoration(
+                           shape: BoxShape.circle,
+                           border: Border.all(color: Colors.redAccent,
+                           width: w*0.004)
+                         ),
+                       )),
+                   SizedBox(
+                     height: h*0.3,
+                     width: w*1,
+                     child: Image(image: AssetImage(contents[index].image),),
+                   )
+                 ],
+               )
+             ],
+           );
+         },),
+       ),
 SizedBox(height: w*0.03,),
-SvgPicture.asset(ImageConst.threedots)
-            ],
-          ),
+              Padding(
+                padding: EdgeInsets.all(w * 0.03),
+                child: AnimatedSmoothIndicator(
+                  activeIndex: onpageindex,
+                  count: 3,
+                  effect: SlideEffect(
+                      dotWidth: w * 0.01,
+                      dotHeight: w * 0.01,
+                      activeDotColor: Colors.green),
+                ),
+              ),
+
           Container(
-            width: w*0.2,
+            width: w*0.25,
             height: w*0.03,
             decoration: BoxDecoration(
               borderRadius:BorderRadius.circular(w*0.04),
