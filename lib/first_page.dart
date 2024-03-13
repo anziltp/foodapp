@@ -22,7 +22,10 @@ class _FirstPageState extends State<FirstPage> {
       appBar: AppBar(
         title: Center(child: Image.asset(ImageConst.splashscreen,width: w*0.03,)),
         actions: [
-          Text("Skip",style: TextStyle(fontWeight: FontWeight.w600,color: ColorConst.primerycolor),)
+          Padding(
+            padding:  EdgeInsets.only(right: w*0.03),
+            child: Text("Skip",style: TextStyle(fontWeight: FontWeight.w600,color: ColorConst.primerycolor),),
+          )
         ],
       ),
       body: Column(
