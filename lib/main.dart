@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodapp/first_page.dart';
 
 import 'Splash_Screen.dart';
 
@@ -25,7 +26,7 @@ class FoodApp extends StatelessWidget {
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home:SplashScreen() ,
+        home:FirstPage() ,
         theme: ThemeData(
 
         ),
