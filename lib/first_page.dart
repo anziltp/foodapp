@@ -15,7 +15,7 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  int initialindex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,23 +26,40 @@ class _FirstPageState extends State<FirstPage> {
         ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Center(
             child: Column(
 
               children: [
-                Text("Order from your favourite",style: TextStyle(fontWeight: FontWeight.w600),),
-                Text("stores or vendors",style: TextStyle(fontWeight: FontWeight.w600),),
+                Text("Order from your favourite",style: TextStyle(fontWeight: FontWeight.w600,fontSize: w*0.02),),
+                Text("stores or vendors",style: TextStyle(fontWeight: FontWeight.w600,fontSize: w*0.02),),
               ],
             ),
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Image.asset(ImageConst.firstpageimage,width: w*0.2,),
+SizedBox(height: w*0.03,),
 SvgPicture.asset(ImageConst.threedots)
             ],
-          )
+          ),
+          Container(
+            width: w*0.2,
+            height: w*0.03,
+            decoration: BoxDecoration(
+              borderRadius:BorderRadius.circular(w*0.04),
+              gradient: LinearGradient(
+                  colors:[ ColorConst.seondarycolor,
+                    ColorConst.primerycolor]),
+            ),
+            child: Center(child: Text("Create an account",style: TextStyle(
+                color: ColorConst.white
+            ),)),
+
+          ),
+          Text("login",style: TextStyle(color: ColorConst.primerycolor),)
         ],
       ),
     );
