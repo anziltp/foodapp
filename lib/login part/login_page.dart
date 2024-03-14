@@ -43,16 +43,17 @@ class _login_pageState extends State<login_page> {
             Column(
               children: [
                 Padding(
-                  padding:  EdgeInsets.only(left: w*0.27,bottom: w*0.02),
+                  padding:  EdgeInsets.only(left: w*0.27,bottom: w*0.01),
                   child: Row(
                     children: [
+
                       Text("Email Address",style: TextStyle(fontWeight: FontWeight.w700),),
                     ],
                   ),
                 ),
                 Container(
                   width: w * 0.5,
-                  height: w * 0.05,
+                  height: w * 0.04,
                   decoration: BoxDecoration(
                     // border: Border.all(color: Colorconst.primarycolor),
                     // borderRadius:
@@ -66,19 +67,17 @@ class _login_pageState extends State<login_page> {
                       textInputAction: TextInputAction.newline,
                       decoration: InputDecoration(
 
-                        label: Padding(
-                          padding:  EdgeInsets.all(w*0.04),
-                          child: Text("enter email",
-                            style: TextStyle(
-                                color: ColorConst.black,
-                                fontSize: w * 0.02),),
-                        ),
+                        label: Text("enter email",
+                          style: TextStyle(
+                              color: ColorConst.black,
+                              fontSize: w * 0.01),),
                         focusedBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
                         enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
                       )),
                 ),
+                SizedBox(height: h*0.03,),
                 Padding(
-                  padding:  EdgeInsets.only(left: w*0.27,bottom: w*0.02),
+                  padding:  EdgeInsets.only(left: w*0.27,bottom: w*0.01),
                   child: Row(
                     children: [
                       Text("Password",style: TextStyle(fontWeight: FontWeight.w700),),
@@ -87,7 +86,7 @@ class _login_pageState extends State<login_page> {
                 ),
                 Container(
                   width: w * 0.5,
-                  height: w * 0.05,
+                  height: w * 0.04,
                   decoration: BoxDecoration(
                     // border: Border.all(color: Colorconst.primarycolor),
                     // borderRadius:
@@ -101,13 +100,10 @@ class _login_pageState extends State<login_page> {
                       textInputAction: TextInputAction.newline,
                       decoration: InputDecoration(
 
-                        label: Padding(
-                          padding:  EdgeInsets.all(w*0.04),
-                          child: Text("enter password",
-                            style: TextStyle(
-                                color: ColorConst.black,
-                                fontSize: w * 0.02),),
-                        ),
+                        label: Text("enter password",
+                          style: TextStyle(
+                              color: ColorConst.black,
+                              fontSize: w * 0.01),),
                         focusedBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
                         enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
                       )),
