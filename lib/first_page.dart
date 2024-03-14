@@ -72,7 +72,7 @@ class _FirstPageState extends State<FirstPage> {
                      bottom: w*0.001,
                        right: w*0.25,
                        child: Container(
-                         height: h*0.31,
+                         height: h*0.35,
                          width: w*0.5,
                          decoration: BoxDecoration(
                            shape: BoxShape.circle,
