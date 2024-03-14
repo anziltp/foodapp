@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../constans/color_const.dart';
 import '../constans/image_const.dart';
@@ -147,7 +150,39 @@ class _Create_pageState extends State<Create_page> {
             )),
             ),
           ],
-        )
+        ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: w*0.25,
+                  height: w*0.03,
+                  decoration: BoxDecoration(
+                    borderRadius:BorderRadius.circular(w*0.04),
+                   color: ColorConst.white,
+                    boxShadow: [
+                      BoxShadow(
+                        blurStyle: BlurStyle.normal,
+                        color: Colors.black12.withOpacity(0.15),
+                        offset: Offset(0, 4),
+                        spreadRadius: 15,
+                        blurRadius: 30,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(ImageConst.googlesvg,width: w*0.02,),
+                      Text("Sign-in with Google",style: TextStyle(
+                          color: ColorConst.black
+                      ),),
+                    ],
+                  ),
+
+                ),
+              ],
+            ),
           ],
         ),
       ),
