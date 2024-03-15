@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/constans/image_const.dart';
+import 'package:foodapp/home_page.dart';
+import 'package:foodapp/login%20part/create_account.dart';
 
 import 'main.dart';
 
@@ -12,6 +14,11 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    Future.delayed(Duration(seconds: 4)).then((value) => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Create_page(),), (route) => false));
+    // TODO: implement initState
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
