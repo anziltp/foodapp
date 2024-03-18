@@ -16,6 +16,9 @@ import 'package:foodapp/constans/image_const.dart';
 
 
 import 'package:foodapp/login%20part/create_account.dart';
+import 'package:foodapp/sidemenu%20part/booking.dart';
+import 'package:foodapp/sidemenu%20part/dashboard.dart';
+import 'package:foodapp/sidemenu%20part/users.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sidebarx/sidebarx.dart';
 
@@ -36,15 +39,10 @@ class _HomePageState extends State<HomePage> {
   final _controller = SideMenuController();
   int _currentIndex = 0;
   List<Widget> views = const [
-    Center(
-      child: Text('Dashboard'),
-    ),
-    Center(
-      child: Text('Account'),
-    ),
-    Center(
-      child: Text('Settings'),
-    ),
+   Dashbored(),
+    Users(),
+    Bookings()
+
   ];
 
   @override
@@ -66,7 +64,21 @@ priority: SideMenuPriority.sizer,
         return SideMenuData(
           header: Container(
             height: h*0.2,
-              child: Image.asset(ImageConst.splashscreen,width: w*0.07,)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image.asset(ImageConst.splashscreen,width: w*0.05,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Food App",style: TextStyle(fontWeight: FontWeight.w700,color: ColorConst.primerycolor,fontSize: w*0.012),),
+                    Text("Admin",style: TextStyle(fontWeight: FontWeight.w700,color: Colors.grey),),
+                  ],
+                )
+
+              ],
+            ),
+          ),
           items: [
 
             SideMenuItemDataTile(
@@ -97,12 +109,12 @@ priority: SideMenuPriority.sizer,
             SideMenuItemDataTile(
               isSelected: _currentIndex == 2,
               onTap: () => setState(() => _currentIndex = 2),
-              title: 'settings',
+              title: 'Bookings',
               hoverColor: Colors.blueGrey,
               selectedTitleStyle:
               const TextStyle(fontWeight: FontWeight.w700,color: Colors.black),
-              icon: const Icon(Icons.settings),
-              selectedIcon: const Icon(Icons.settings),
+              icon: const Icon(Icons.shopping_cart),
+              selectedIcon: const Icon(Icons.shopping_cart),
               titleStyle: const TextStyle(color: Colors.black),
             ),
 
