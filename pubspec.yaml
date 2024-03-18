@@ -40,7 +40,11 @@ dependencies:
   google_fonts: ^6.1.0
   flutter_svg: ^2.0.9
   pinput: ^3.0.1
-  easy_sidemenu: ^0.5.0
+  easy_dashboard: ^0.0.2
+  sidebarx: ^0.16.3
+  flutter_side_menu: ^0.4.0
+  side_navigation: ^1.0.4
+
 
 dev_dependencies:
   flutter_test:

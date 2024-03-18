@@ -3,23 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:foodapp/home_page.dart';
+
 
 import '../constans/color_const.dart';
 import '../constans/image_const.dart';
+import '../home_page.dart';
 import '../main.dart';
 
-class Create_page extends StatefulWidget {
-  const Create_page({super.key});
+class CreatePage extends StatefulWidget {
+  const CreatePage({super.key});
 
   @override
-  State<Create_page> createState() => _Create_pageState();
+  State<CreatePage> createState() => _CreatePageState();
 }
 
-class _Create_pageState extends State<Create_page> {
+class _CreatePageState extends State<CreatePage> {
+  final formKey=GlobalKey<FormState>();
+
   TextEditingController name = TextEditingController();
   TextEditingController password = TextEditingController();
-  TextEditingController email = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +38,7 @@ class _Create_pageState extends State<Create_page> {
                   Container(
                     width: w * 0.2,
                     height: w * 0.03,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       // border: Border.all(color: Colorconst.primarycolor),
                       // borderRadius:
                       color: ColorConst.white,
@@ -60,7 +63,7 @@ class _Create_pageState extends State<Create_page> {
                   Container(
                     width: w * 0.2,
                     height: w * 0.03,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       // border: Border.all(color: Colorconst.primarycolor),
                       // borderRadius:
                       color: ColorConst.white,
@@ -71,12 +74,14 @@ class _Create_pageState extends State<Create_page> {
                         autovalidateMode:
                         AutovalidateMode.onUserInteraction,
                         textInputAction: TextInputAction.newline,
+
                         decoration: InputDecoration(
 
                           label: Text("password",
                             style: TextStyle(
                                 color: ColorConst.black,
                                 fontSize: w * 0.01),),
+
                           focusedBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
                           enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
                         )),
@@ -84,19 +89,40 @@ class _Create_pageState extends State<Create_page> {
                   SizedBox(height: w*0.04,),
                       InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) =>HomePage(),));
+                          if(
+                          name.text!=""&&
+                              password.text!=""&&
+                              formKey.currentState!.validate()
+                          )
+                          {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => HomePage(),));
+                          }else{
+                            name.text=="" ? ScaffoldMessenger.of(context).
+                            showSnackBar(SnackBar(content: Text("please enter username"))):
+                            password.text=="" ? ScaffoldMessenger.of(context).
+                            showSnackBar(SnackBar(content: Text("please enter password"))):
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(content: Text("enter your valid details")));
+                          }
+
                         },
+
                         child: Container(
                         width: w*0.1,
                         height: w*0.025,
                         decoration: BoxDecoration(
                           borderRadius:BorderRadius.circular(w*0.04),
-                          gradient: LinearGradient(
-                              colors:[ ColorConst.seondarycolor,
-                                ColorConst.primerycolor]),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              stops: [0.3,0.7],
+                              colors:[
+                                Color(0xffF9881F),
+                                Color(0xffFF774C)
+                              ]),
                         ),
-                        child: Center(child: Text("login",style: TextStyle(
+                        child: const Center(child: Text("login",style: TextStyle(
                             color: ColorConst.white,fontWeight: FontWeight.w700
                         ),)),
 

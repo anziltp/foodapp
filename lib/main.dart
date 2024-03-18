@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodapp/first_page.dart';
+import 'package:flutter/services.dart';
+
 import 'package:foodapp/home_page.dart';
+
 import 'package:foodapp/login%20part/create_account.dart';
 
 import 'Splash_Screen.dart';
@@ -28,7 +30,7 @@ class FoodApp extends StatelessWidget {
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home:SplashScreen() ,
+        home:const SplashScreen() ,
         theme: ThemeData(
 
         ),
