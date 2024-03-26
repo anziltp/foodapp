@@ -22,7 +22,6 @@ import 'package:foodapp/sidemenu%20part/dashboard.dart';
 import 'package:foodapp/sidemenu%20part/product%20_Adding/product_Home.dart';
 
 import 'package:foodapp/sidemenu%20part/users.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 
 import 'constans/color_const.dart';
@@ -155,9 +154,9 @@ priority: SideMenuPriority.sizer,
                   actions: [
                     Column(
                       children: [
-                        CupertinoDialogAction(child: Text("yes",style: GoogleFonts.poppins(fontSize: 17,fontWeight: FontWeight.w800,color: Colors.red),)),
+                        CupertinoDialogAction(child: Text("yes",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w800,color: Colors.red),)),
                         const Divider(),
-                        CupertinoDialogAction(child: Text("cancel",style: GoogleFonts.poppins(fontSize: 17,fontWeight: FontWeight.w800),)
+                        CupertinoDialogAction(child: Text("cancel",style:TextStyle(fontSize: 17,fontWeight: FontWeight.w800),)
                           ,onPressed: () {
                             Navigator.pop(context);
                           },),
