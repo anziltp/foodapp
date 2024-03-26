@@ -16,11 +16,14 @@ import 'package:foodapp/constans/image_const.dart';
 
 
 import 'package:foodapp/login%20part/create_account.dart';
+import 'package:foodapp/sidemenu%20part/add_items.dart';
 import 'package:foodapp/sidemenu%20part/booking.dart';
 import 'package:foodapp/sidemenu%20part/dashboard.dart';
+import 'package:foodapp/sidemenu%20part/product%20_Adding/product_Home.dart';
+
 import 'package:foodapp/sidemenu%20part/users.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sidebarx/sidebarx.dart';
+
 
 import 'constans/color_const.dart';
 import 'main.dart';
@@ -41,7 +44,9 @@ class _HomePageState extends State<HomePage> {
   List<Widget> views = const [
    Dashbored(),
     Users(),
-    Bookings()
+    Bookings(),
+    AddItems(),
+    ProductHome()
 
   ];
 
@@ -51,7 +56,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-
+title: const Text("hello,  user",style: TextStyle(fontWeight: FontWeight.w700),),
       ),
 body: Row(
   children: [
@@ -117,6 +122,29 @@ priority: SideMenuPriority.sizer,
               selectedIcon: const Icon(Icons.shopping_cart),
               titleStyle: const TextStyle(color: Colors.black),
             ),
+            SideMenuItemDataTile(
+              isSelected: _currentIndex == 3,
+              onTap: () => setState(() => _currentIndex = 3),
+              title: 'Items',
+              hoverColor: Colors.blueGrey,
+              selectedTitleStyle:
+              const TextStyle(fontWeight: FontWeight.w700,color: Colors.black),
+              icon: const Icon(Icons.import_export),
+              selectedIcon: const Icon(Icons.import_export),
+              titleStyle: const TextStyle(color: Colors.black),
+            ),
+            SideMenuItemDataTile(
+              isSelected: _currentIndex == 4,
+              onTap: () => setState(() => _currentIndex = 4),
+              title: 'Products',
+              hoverColor: Colors.blueGrey,
+              selectedTitleStyle:
+              const TextStyle(fontWeight: FontWeight.w700,color: Colors.black),
+              icon: const Icon(Icons.production_quantity_limits),
+              selectedIcon: const Icon(Icons.production_quantity_limits),
+              titleStyle: const TextStyle(color: Colors.black),
+            ),
+
 
           ],
           footer: InkWell(
@@ -156,7 +184,7 @@ priority: SideMenuPriority.sizer,
                     Text('EXIT',style: TextStyle(
                       fontWeight: FontWeight.w700,fontSize: w*0.02
                     ),),
-                    SizedBox(width: w*0.02,),
+                    SizedBox(width: w*0.016,),
                     const Icon(Icons.exit_to_app,)
                   ],
                 ),
