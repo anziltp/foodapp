@@ -62,12 +62,14 @@ body: Row(
     SideMenu(
       controller: _controller,
       backgroundColor: Colors.white,
-priority: SideMenuPriority.sizer,
+priority: SideMenuPriority.mode,
       mode: SideMenuMode.open,
       builder: (data) {
         return SideMenuData(
+
           header: Container(
             height: h*0.2,
+
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
