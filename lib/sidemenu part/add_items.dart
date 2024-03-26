@@ -4,7 +4,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+
+
 
 import '../constans/color_const.dart';
 import '../main.dart';
@@ -21,15 +22,6 @@ class _AddItemsState extends State<AddItems> {
   bool a = false;
   bool b = false;
   var file;
-  Future<void> pickimage(ImageSource a) async {
-    ImagePicker imagePicker = ImagePicker();
-    final imamefile = await imagePicker.pickImage(source: a);
-    file = File(imamefile!.path);
-    if (mounted) {
-      file = File(imamefile.path);
-      setState(() {});
-    }
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +69,7 @@ class _AddItemsState extends State<AddItems> {
                        SizedBox(width: w*0.03,),
                        InkWell(
                          onTap: () {
-                           pickimage(ImageSource.gallery);
+
                          },
                          child: Container(
                            height: h * 0.05,

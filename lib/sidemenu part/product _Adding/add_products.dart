@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+
 
 import '../../constans/color_const.dart';
 import '../../constans/image_const.dart';
@@ -24,17 +26,42 @@ class _AddProductsState extends State<AddProducts> {
   TextEditingController pricecondroller = TextEditingController();
   final formKey = GlobalKey();
 
-  bool a = false;
-  bool b = false;
-  var file;
-  Future<void> pickimage(ImageSource a) async {
-    ImagePicker imagePicker = ImagePicker();
-    final imamefile = await imagePicker.pickImage(source: a);
-    file = File(imamefile!.path);
-    if (mounted) {
-      file = File(imamefile.path);
-      setState(() {});
-    }
+var file;
+  PlatformFile? pickFile;
+  UploadTask? uploadTask;
+  String? urlDownlod;
+  Future selectFileToMessage(String name) async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+
+    pickFile = result.files.first;
+
+    // String? ext = pickFile?.name?.split('.')?.last;
+    final fileBytes = result.files.first.bytes;
+
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Uploading...")));
+    uploadFileToFireBase(name, fileBytes);
+
+    setState(() {});
+  }
+
+  Future uploadFileToFireBase(String name, fileBytes) async {
+    uploadTask = FirebaseStorage.instance
+        .ref('banner/${DateTime.now().toString()}-$name')
+        .putData(fileBytes,SettableMetadata(
+        contentType: 'image/jpeg'
+    ));
+    final snapshot = await uploadTask?.whenComplete(() {});
+    urlDownlod = (await snapshot?.ref?.getDownloadURL())!;
+
+    // ignore: use_build_context_synchronously
+    // showUploadMessage(context, '$name Uploaded Successfully...');
+    await Future.delayed(const Duration(seconds: 2));
+    // ignore: use_build_context_synchronously
+    // ScaffoldMessenger.of(context).clearSnackBars();
+    setState(() {});
   }
 
   @override
@@ -73,7 +100,7 @@ class _AddProductsState extends State<AddProducts> {
                       children: [
                         Column(
                           children: [
-                            file == null
+                            file==null
                                 ? Container(
                                     height: h * 0.3,
                                     width: w * 0.3,
@@ -83,7 +110,7 @@ class _AddProductsState extends State<AddProducts> {
                                         color: ColorConst.white),
                                     child: Center(
                                         child: Text(
-                                      "Uplode image",
+                                      "Upload image",
                                       style: TextStyle(
                                           fontSize: w * 0.03,
                                           fontWeight: FontWeight.w700,
@@ -108,7 +135,8 @@ class _AddProductsState extends State<AddProducts> {
                             ),
                             InkWell(
                               onTap: () {
-                                pickimage(ImageSource.gallery);
+                                selectFileToMessage("food");
+
                               },
                               child: Container(
                                 height: h * 0.07,
@@ -131,6 +159,7 @@ class _AddProductsState extends State<AddProducts> {
                             )
                           ],
                         ),
+                        ///fijin shana
                         Column(
                           children: [
                             Container(
