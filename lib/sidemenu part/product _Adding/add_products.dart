@@ -29,7 +29,10 @@ class _AddProductsState extends State<AddProducts> {
 var file;
   PlatformFile? pickFile;
   UploadTask? uploadTask;
-  String? urlDownlod;
+  String? coverImage;
+  bool value = false;
+
+
   Future selectFileToMessage(String name) async {
     final result = await FilePicker.platform.pickFiles();
     if (result == null) return;
@@ -44,17 +47,16 @@ var file;
         .showSnackBar(SnackBar(content: Text("Uploading...")));
     uploadFileToFireBase(name, fileBytes);
 
+    print(pickFile);
     setState(() {});
   }
 
   Future uploadFileToFireBase(String name, fileBytes) async {
     uploadTask = FirebaseStorage.instance
-        .ref('banner/${DateTime.now().toString()}-$name')
-        .putData(fileBytes,SettableMetadata(
-        contentType: 'image/jpeg'
-    ));
+        .ref('Hotel/${DateTime.now().toString()}-$name')
+        .putData(fileBytes, SettableMetadata(contentType: 'image/jpeg'));
     final snapshot = await uploadTask?.whenComplete(() {});
-    urlDownlod = (await snapshot?.ref?.getDownloadURL())!;
+    coverImage = (await snapshot?.ref?.getDownloadURL())!;
 
     // ignore: use_build_context_synchronously
     // showUploadMessage(context, '$name Uploaded Successfully...');
@@ -63,7 +65,6 @@ var file;
     // ScaffoldMessenger.of(context).clearSnackBars();
     setState(() {});
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,35 +101,33 @@ var file;
                       children: [
                         Column(
                           children: [
-                            file==null
-                                ? Container(
+                            // file==null
+                            //     ? Container(
+                            //         height: h * 0.3,
+                            //         width: w * 0.3,
+                            //         decoration: BoxDecoration(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(w * 0.03),
+                            //             color: ColorConst.white),
+                            //         child: Center(
+                            //             child: Text(
+                            //           "Upload image",
+                            //           style: TextStyle(
+                            //               fontSize: w * 0.03,
+                            //               fontWeight: FontWeight.w700,
+                            //               color: ColorConst.primerycolor),
+                            //         )))
+                            //     :
+                              Container(
                                     height: h * 0.3,
                                     width: w * 0.3,
                                     decoration: BoxDecoration(
+
+                                      image: DecorationImage(image: NetworkImage(coverImage.toString()),),
                                         borderRadius:
                                             BorderRadius.circular(w * 0.03),
                                         color: ColorConst.white),
-                                    child: Center(
-                                        child: Text(
-                                      "Upload image",
-                                      style: TextStyle(
-                                          fontSize: w * 0.03,
-                                          fontWeight: FontWeight.w700,
-                                          color: ColorConst.primerycolor),
-                                    )))
-                                : Container(
-                                    height: h * 0.3,
-                                    width: w * 0.3,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(w * 0.03),
-                                        color: ColorConst.white),
-                                    child: Image(
-                                      image: FileImage(
-                                        file,
-                                      ),
-                                      fit: BoxFit.fill,
-                                    ),
+
                                   ),
                             SizedBox(
                               height: h * 0.05,
@@ -159,7 +158,7 @@ var file;
                             )
                           ],
                         ),
-                        ///fijin shana
+
                         Column(
                           children: [
                             Container(
