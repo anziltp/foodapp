@@ -3,15 +3,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import 'package:image_picker/image_picker.dart';
 
-import '../../constans/color_const.dart';
-import '../../constans/image_const.dart';
-import '../../home_page.dart';
 import '../../main.dart';
+import '../../models/user_model.dart';
+
 
 class AddProducts extends StatefulWidget {
   const AddProducts({super.key});
@@ -20,18 +18,22 @@ class AddProducts extends StatefulWidget {
   State<AddProducts> createState() => _AddProductsState();
 }
 
-
 class _AddProductsState extends State<AddProducts> {
-  TextEditingController namecondroller = TextEditingController();
-  TextEditingController pricecondroller = TextEditingController();
-  final formKey = GlobalKey();
+  String imgUrl = 'https://cdn.pixabay.com/photo/2017/02/07/02/16/cloud-2044823_960_720.png';
 
-var file;
   PlatformFile? pickFile;
   UploadTask? uploadTask;
+  String? urlDownlod;
   String? coverImage;
-  bool value = false;
+  String? chooseitem;
 
+
+  bool coverPhoto=false;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController placeController = TextEditingController();
+  TextEditingController rateController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   Future selectFileToMessage(String name) async {
     final result = await FilePicker.platform.pickFiles();
@@ -47,13 +49,11 @@ var file;
         .showSnackBar(SnackBar(content: Text("Uploading...")));
     uploadFileToFireBase(name, fileBytes);
 
-    print(pickFile);
     setState(() {});
   }
 
   Future uploadFileToFireBase(String name, fileBytes) async {
-    uploadTask = FirebaseStorage.instance
-        .ref('Hotel/${DateTime.now().toString()}-$name')
+    uploadTask = FirebaseStorage.instance.ref('banner/${DateTime.now().toString()}-$name')
         .putData(fileBytes, SettableMetadata(contentType: 'image/jpeg'));
     final snapshot = await uploadTask?.whenComplete(() {});
     coverImage = (await snapshot?.ref?.getDownloadURL())!;
@@ -65,201 +65,396 @@ var file;
     // ScaffoldMessenger.of(context).clearSnackBars();
     setState(() {});
   }
+  List imageUrlList =[];
+  Future uploadFileToFireBaseMultiple(String name, fileBytes) async {
+    uploadTask = FirebaseStorage.instance
+        .ref('banner/${DateTime.now().toString()}-$name')
+        .putData(fileBytes, SettableMetadata(contentType: 'image/jpeg'));
+    final snapshot = await uploadTask?.whenComplete(() {});
+    urlDownlod = (await snapshot?.ref?.getDownloadURL())!;
+
+    imageUrlList.add(urlDownlod);
+
+    print("imageUrlList");
+    print(imageUrlList);
+
+
+    setState(() {});
+  }
+
+  var imagesList =[];
+
+  Future selectMultipleFiles(String name) async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true,);
+    if (result == null) return;
+
+    imagesList = result.files;
+
+    for(var docs in imagesList){
+      print(docs.runtimeType);
+      final fileBytes = docs.bytes;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Uploading...")));
+      uploadFileToFireBaseMultiple(name, fileBytes);
+
+    }
+    setState(() {});
+  }
+
+
+  getImageDetails() {
+    if (urlDownlod == '') {
+      showUploadMessage(context, 'please upload image');
+    }if (nameController.text == '') {
+      showUploadMessage(context, 'please upload name');
+    }if (rateController.text == '') {
+      showUploadMessage(context, 'please upload rate');
+    }
+
+
+    Usermodel userModelData = Usermodel(
+        name: nameController.text,
+        price: rateController.text
+        // place: placeController.text,
+        // rate: double.tryParse(rateController.text),
+        // image: coverImage.toString(),
+        // image2: imageUrlList,
+        // description: descriptionController.text,
+        // category: chooseitem
+    );
+
+    // FirebaseFirestore.instance.collection("Hotel").doc(nameController.text).set(userModelData.toMap()
+
+      // "name":nameController.text,
+      // "place":placeController.text,
+      // "rate":rateController.text,
+      // "image": urlDownlod
+    // );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: w * 0.02),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Edit the product",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, color: ColorConst.white),
-                    ),
-                  ],
+        body: SingleChildScrollView(
+          child: Column(children: [
+            SizedBox(
+              height: w * 0.03,
+            ),
+            Center(
+              child: Container(
+                height: w * 0.10,
+                width: w * 0.10,
+                decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(w * 0.03),
+                    image:coverPhoto == true? DecorationImage(image:   NetworkImage(coverImage.toString()),fit: BoxFit.cover)  :DecorationImage(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZUX7zo1yYFaBeOYIcOfcgwnULvpM7YqzXxA&usqp=CAU"),fit: BoxFit.cover)
                 ),
               ),
-              Container(
-                width: w * 0.9,
-                height: w * 0.5,
-                color: Colors.grey,
-                padding: EdgeInsets.all(w * 0.03),
-                margin: EdgeInsets.all(w * 0.03),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            // file==null
-                            //     ? Container(
-                            //         height: h * 0.3,
-                            //         width: w * 0.3,
-                            //         decoration: BoxDecoration(
-                            //             borderRadius:
-                            //                 BorderRadius.circular(w * 0.03),
-                            //             color: ColorConst.white),
-                            //         child: Center(
-                            //             child: Text(
-                            //           "Upload image",
-                            //           style: TextStyle(
-                            //               fontSize: w * 0.03,
-                            //               fontWeight: FontWeight.w700,
-                            //               color: ColorConst.primerycolor),
-                            //         )))
-                            //     :
-                              Container(
-                                    height: h * 0.3,
-                                    width: w * 0.3,
-                                    decoration: BoxDecoration(
+            ),
+            SizedBox(height: w*0.008,),
+            InkWell(
+              onTap: () {
+                selectFileToMessage("salman");
+                coverPhoto=true;
+                setState(() {
 
-                                      image: DecorationImage(image: NetworkImage(coverImage.toString()),),
-                                        borderRadius:
-                                            BorderRadius.circular(w * 0.03),
-                                        color: ColorConst.white),
-
-                                  ),
-                            SizedBox(
-                              height: h * 0.05,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                selectFileToMessage("food");
-
-                              },
-                              child: Container(
-                                height: h * 0.07,
-                                width: w * 0.07,
-                                decoration: BoxDecoration(
-                                    color: ColorConst.white,
-                                    borderRadius:
-                                        BorderRadius.circular(w * 0.04),
-                                    border: Border.all(
-                                      color: ColorConst.primerycolor,
-                                    )),
-                                child: Center(
-                                    child: Text(
-                                  "New image",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: ColorConst.primerycolor),
-                                )),
-                              ),
-                            )
-                          ],
+                });
+              },
+              child: Container(
+                height: w * 0.04,
+                width: w * 0.09,
+                decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [0.3,0.7],
+                        colors:[
+                          Color(0xffF9881F),
+                          Color(0xffFF774C)
+                        ]),
+                    borderRadius: BorderRadius.circular(w * 0.01)),
+                child: Center(
+                    child: Text("Cover image",
+                        style: TextStyle(fontSize: w * 0.015, color: Colors.white))),
+              ),
+            ),
+            SizedBox(height: w*0.02,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: w * 0.4,
+                  child: TextFormField(
+                      controller: nameController,
+                      textCapitalization: TextCapitalization.sentences,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                      decoration: InputDecoration(
+                        filled: true,
+                        labelText: "Name",
+                        labelStyle:
+                        TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                        hintText: "Please enter your name",
+                        hintStyle: TextStyle(
+                          fontSize: w * 0.015,
+                          fontWeight: FontWeight.w500,
                         ),
-
-                        Column(
-                          children: [
-                            Container(
-                              width: w * 0.3,
-                              height: w * 0.03,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(w * 0.04),
-                                border:
-                                    Border.all(color: ColorConst.primerycolor),
-                                color: ColorConst.white,
-                              ),
-                              child: TextFormField(
-                                  controller: name,
-                                  keyboardType: TextInputType.name,
-                                  // autovalidateMode:
-                                  // AutovalidateMode.onUserInteraction,
-                                  // textInputAction: TextInputAction.newline,
-                                  decoration: InputDecoration(
-                                    label: Padding(
-                                      padding: EdgeInsets.only(left: w * 0.02),
-                                      child: Text(
-                                        "Product Name",
-                                        style: TextStyle(
-                                            color: ColorConst.black,
-                                            fontSize: w * 0.01),
-                                      ),
-                                    ),
-                                    // focusedBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
-                                    // enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
-                                  )),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
                             ),
-                            SizedBox(
-                              height: h * 0.05,
+                            borderRadius: BorderRadius.circular(w * 0.01)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
                             ),
-                            Container(
-                              width: w * 0.2,
-                              height: w * 0.03,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: ColorConst.primerycolor),
-                                borderRadius: BorderRadius.circular(w * 0.04),
-                                color: ColorConst.white,
-                              ),
-                              child: TextFormField(
-                                  controller: password,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'[0-9.]'))
-                                  ],
-                                  decoration: InputDecoration(
-                                    label: Padding(
-                                      padding: EdgeInsets.only(left: w * 0.03),
-                                      child: Text(
-                                        "Price",
-                                        style: TextStyle(
-                                            color: ColorConst.black,
-                                            fontSize: w * 0.01),
-                                      ),
-                                    ),
-
-                                    // focusedBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
-                                    // enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(w * 0.04),),
-                                  )),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: h * 0.05,
-                    ),
-                    Center(
-                      child: Container(
-                        width: w * 0.1,
-                        height: w * 0.025,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(w * 0.04),
-                          gradient: const LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              stops: [0.3, 0.7],
-                              colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                            borderRadius: BorderRadius.circular(w * 0.01)),
+                      )),
+                ),
+                SizedBox(width: w * 0.01,),
+                // Container(
+                //   width: w * 0.4,
+                //   child: TextFormField(
+                //       controller: placeController,
+                //       textCapitalization: TextCapitalization.sentences,
+                //       keyboardType: TextInputType.text,
+                //       textInputAction: TextInputAction.done,
+                //       style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                //       decoration: InputDecoration(
+                //         filled: true,
+                //         labelText: "Place",
+                //         labelStyle:
+                //         TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                //         hintText: "place of hotel",
+                //         hintStyle: TextStyle(
+                //           fontSize: w * 0.015,
+                //           fontWeight: FontWeight.w500,
+                //         ),
+                //         enabledBorder: OutlineInputBorder(
+                //             borderSide: BorderSide(
+                //               color: Colors.grey,
+                //             ),
+                //             borderRadius: BorderRadius.circular(w * 0.01)),
+                //         focusedBorder: OutlineInputBorder(
+                //             borderSide: BorderSide(
+                //               color: Colors.blue,
+                //             ),
+                //             borderRadius: BorderRadius.circular(w * 0.01)),
+                //       )),
+                // ),
+              ],
+            ),
+            SizedBox(height: w*0.01,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: w * 0.4,
+                  child: TextFormField(
+                      controller: rateController,
+                      textCapitalization: TextCapitalization.sentences,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                      decoration: InputDecoration(
+                        filled: true,
+                        labelText: "price",
+                        labelStyle:
+                        TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                        hintText: "Please enter price",
+                        hintStyle: TextStyle(
+                          fontSize: w * 0.015,
+                          fontWeight: FontWeight.w500,
                         ),
-                        child: const Center(
-                            child: Text(
-                          ""
-                          "Add New Products",
-                          style: TextStyle(
-                              color: ColorConst.white,
-                              fontWeight: FontWeight.w700),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(w * 0.01)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                            borderRadius: BorderRadius.circular(w * 0.01)),
+                      )),
+                ),
+                SizedBox(width: w * 0.01,),
+                Container(
+                  width: w * 0.4,
+                  child: TextFormField(
+                      controller: descriptionController,
+                      textCapitalization: TextCapitalization.sentences,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                      decoration: InputDecoration(
+                        filled: true,
+                        labelText: "Description",
+                        labelStyle:
+                        TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                        hintText: "description",
+                        hintStyle: TextStyle(
+                          fontSize: w * 0.015,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(w * 0.01)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                            borderRadius: BorderRadius.circular(w * 0.01)),
+                      )),
+                ),
+              ],
+            ),
+            SizedBox(height: w*0.01,),
+            // StreamBuilder<QuerySnapshot>(
+            //     stream: FirebaseFirestore.instance.collection("category").snapshots(),
+            //     builder: (context, snapshot) {
+            //
+            //       var categories=snapshot.data!.docs;
+            //
+            //       return Container(
+            //         width: w*0.4,
+            //         height: w*0.035,
+            //         // padding: EdgeInsets.only(left: 16, right: 16),
+            //         decoration: BoxDecoration(
+            //           // color: Colors.grey,
+            //             border: Border.all(color: Colors.grey,width: 1),
+            //             borderRadius: BorderRadius.circular(15)
+            //         ),
+            //         child: DropdownButton(
+            //           borderRadius: BorderRadius.circular(w*0.01),
+            //           underline: SizedBox(),
+            //           isExpanded: true,
+            //           value: chooseitem,
+            //           hint: Text("Category"),
+            //           items: List.generate(categories.length, (index) =>DropdownMenuItem(
+            //
+            //               value: categories[index]['category'],
+            //
+            //               child: Text(categories[index]['category']))),
+            //           onChanged: (newvalue) {
+            //             setState(() {
+            //               chooseitem=newvalue.toString();
+            //             });
+            //           },
+            //         ),
+            //       );
+            //     }
+            // ),
+            SizedBox(height: w*0.01,),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                SizedBox(width: w*0.05,),
+                InkWell(
+                  onTap: () {
+                    getImageDetails();
+                    nameController.clear();
+                    placeController.clear();
+                    rateController.clear();
+                    descriptionController.clear();
+                    imageUrlList=[];
+                    coverImage='';
+                    chooseitem="";
+                    setState(() {
+
+                    });
+
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text("Successfull")));
+                  },
+                  child: Container(
+                    height: w * 0.04,
+                    width: w * 0.2,
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            stops: [0.3,0.7],
+                            colors:[
+                              Color(0xffF9881F),
+                              Color(0xffFF774C)
+                            ]),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withOpacity(0.20),
+                            offset: Offset(0, 4),
+                            spreadRadius: 2,
+                            blurRadius: 4,
+                          )
+                        ],
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(w * 0.03)),
+                    child: Center(
+                        child: Text(
+                          "Upload",
+                          style: TextStyle(fontSize: w * 0.015, color: Colors.white),
                         )),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                // InkWell(
+                //   onTap: () {
+                //     selectMultipleFiles('name');
+                //   },
+                //
+                //   child: Container(
+                //       height: w * 0.04,
+                //       width: w * 0.09,
+                //       decoration: BoxDecoration(
+                //           color: Colors.green,
+                //           boxShadow: [
+                //             BoxShadow(
+                //               color: Colors.green.withOpacity(0.20),
+                //               offset: Offset(0, 4),
+                //               spreadRadius: 2,
+                //               blurRadius: 4,
+                //             )
+                //           ],
+                //           borderRadius: BorderRadius.circular(w * 0.01)),
+                //       child: Center(child: Text("Add Extra Image",style: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: w*0.01
+                //       ),))
+                //   ),
+                // ),
+              ],
+            ),
+
+            // Row(
+            //   children: List.generate(imageUrlList.length, (index) => Padding(
+            //     padding: const EdgeInsets.all(8.0),
+            //     child: Container(
+            //       // child: Image.network(im),
+            //       height: 100,
+            //       width: 100,
+            //       decoration: BoxDecoration(
+            //           color: Colors.tealAccent.shade200,
+            //           borderRadius: BorderRadius.circular(15),
+            //           image: DecorationImage(image: NetworkImage(imageUrlList[index]),fit: BoxFit.cover)
+            //       ),
+            //
+            //     ),
+            //   )),
+            // ),
+          ]),
+        ));
   }
+}
+
+showUploadMessage(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  return ;
 }

@@ -36,7 +36,6 @@ class FoodApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: HomePage() ,
         theme: ThemeData(
-
         ),
       ),
     );

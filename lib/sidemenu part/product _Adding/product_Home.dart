@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp/sidemenu%20part/product%20_Adding/add_products.dart';
 
@@ -18,10 +19,15 @@ class _ProductHomeState extends State<ProductHome> {
       appBar: AppBar(),
       body: Column(
         children: [
+          SizedBox(height: h*0.03,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("latest products")
+              Center(child: Text("latest products",style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: w*0.02
+              ),))
             ],
           ),
           Padding(
@@ -52,8 +58,7 @@ class _ProductHomeState extends State<ProductHome> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => AddProducts(),));
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => AddProducts(),));
                   },
                   child: Container(
                     height: w * 0.04,
