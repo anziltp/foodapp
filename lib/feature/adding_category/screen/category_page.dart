@@ -17,14 +17,14 @@ class AddItems extends ConsumerStatefulWidget {
   @override
   ConsumerState<AddItems> createState() => _AddItemsState();
 }
+
 class _AddItemsState extends ConsumerState<AddItems> {
-  TextEditingController category= TextEditingController();
+  TextEditingController category = TextEditingController();
 
   PlatformFile? pickFile;
   UploadTask? uploadTask;
   String? coverImage;
   bool value = false;
-
 
   Future selectFileToMessage(String name) async {
     final result = await FilePicker.platform.pickFiles();
@@ -45,7 +45,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
 
   Future uploadFileToFireBase(String name, fileBytes) async {
     uploadTask = FirebaseStorage.instance
-        .ref('Hotel/${DateTime.now().toString()}-$name')
+        .ref('Categories/${DateTime.now().toString()}-$name')
         .putData(fileBytes, SettableMetadata(contentType: 'image/jpeg'));
     final snapshot = await uploadTask?.whenComplete(() {});
     coverImage = (await snapshot?.ref?.getDownloadURL())!;
@@ -58,8 +58,12 @@ class _AddItemsState extends ConsumerState<AddItems> {
     setState(() {});
   }
 
-  addCategory(){
-    ref.read(categoryControllerProvider).category(category: category.text, image: coverImage.toString());
+  addCategory() {
+    ref
+        .read(categoryControllerProvider)
+        .category(category: category.text, image: coverImage.toString());
+    coverImage = "";
+    category.clear();
   }
 
   @override
@@ -82,7 +86,9 @@ class _AddItemsState extends ConsumerState<AddItems> {
               ),
               child: Image.network(coverImage.toString()),
             ),
-            SizedBox(height: h*0.03,),
+            SizedBox(
+              height: h * 0.03,
+            ),
             Center(
               child: GestureDetector(
                 onTap: () {
@@ -100,16 +106,18 @@ class _AddItemsState extends ConsumerState<AddItems> {
                       borderRadius: BorderRadius.circular(w * 0.06)),
                   child: Center(
                       child: Text(
-                        "Add Image",
-                        style: TextStyle(
-                            fontSize: w * 0.012,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                      )),
+                    "Add Image",
+                    style: TextStyle(
+                        fontSize: w * 0.012,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
+                  )),
                 ),
               ),
             ),
-            SizedBox(height: h*0.03,),
+            SizedBox(
+              height: h * 0.03,
+            ),
             SizedBox(
               width: w * 0.4,
               child: TextFormField(
@@ -130,18 +138,20 @@ class _AddItemsState extends ConsumerState<AddItems> {
                     //   fontWeight: FontWeight.w500,
                     // ),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.grey,
                         ),
                         borderRadius: BorderRadius.circular(w * 0.01)),
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.blue,
                         ),
                         borderRadius: BorderRadius.circular(w * 0.01)),
                   )),
             ),
-            SizedBox(height: h*0.02,),
+            SizedBox(
+              height: h * 0.02,
+            ),
             Center(
               child: GestureDetector(
                 onTap: () {
@@ -159,15 +169,75 @@ class _AddItemsState extends ConsumerState<AddItems> {
                       borderRadius: BorderRadius.circular(w * 0.06)),
                   child: Center(
                       child: Text(
-                        "Upload",
-                        style: TextStyle(
-                            fontSize: w * 0.012,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                      )),
+                    "Upload",
+                    style: TextStyle(
+                        fontSize: w * 0.012,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
+                  )),
                 ),
               ),
             ),
+
+            SizedBox(height: w*0.03,),
+
+            ref.watch(streamDataProvider).when(data: (data){
+              return ListView.separated(
+                shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Column(
+
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: h*0.2,
+                          width: w*0.3,
+                          // color: Colors.grey,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(data[index].category,style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: w*0.02,
+                                color: Colors.black
+                              ),),
+
+                              SizedBox(width: w*0.1,),
+                              Container(
+                                height: w*0.08,
+                                width: w*0.08,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(w*0.02),
+                                    color: ColorConst.seondarycolor
+                                ),
+                                child: Image.network(data[index].image),
+                              ),
+                              Container(
+                                height: w*0.03,
+                                width: w*0.03,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(w*0.03),
+                                  color: Colors.red
+                                ),
+                                child: Icon(Icons.delete_outlined,color: ColorConst.white,),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: w*0.02,);
+                  },
+                  itemCount: data.length);
+            }, error: (error, stackTrace) {
+              return Text(error.toString());
+            },
+
+              loading: () {
+              return CircularProgressIndicator();
+            },)
 
           ],
         ),
