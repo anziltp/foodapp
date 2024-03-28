@@ -7,7 +7,7 @@ class CategoryController{
   final CategoryRepository _categoryRepository;
   CategoryController({required CategoryRepository categoryRepository}):_categoryRepository=categoryRepository;
 
-  category(category,image){
+  category({required category,required image}){
 _categoryRepository.category(category, image);
   }
 }

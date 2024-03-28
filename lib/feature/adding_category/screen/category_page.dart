@@ -17,11 +17,8 @@ class AddItems extends ConsumerStatefulWidget {
   @override
   ConsumerState<AddItems> createState() => _AddItemsState();
 }
-
-TextEditingController category = TextEditingController();
-
 class _AddItemsState extends ConsumerState<AddItems> {
-
+  TextEditingController category= TextEditingController();
 
   PlatformFile? pickFile;
   UploadTask? uploadTask;
@@ -62,7 +59,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
   }
 
   addCategory(){
-    ref.read(categoryControllerProvider).category(category.text, "");
+    ref.read(categoryControllerProvider).category(category: category.text, image: coverImage.toString());
   }
 
   @override
@@ -72,22 +69,44 @@ class _AddItemsState extends ConsumerState<AddItems> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: () {
-                selectFileToMessage("food");
-              },
-              child: Container(
-                height: h * 0.3,
-                width: w * 0.15,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(w * 0.03),
-                  gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0.3, 0.7],
-                      colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+            Container(
+              height: h * 0.3,
+              width: w * 0.15,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(w * 0.03),
+                gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.3, 0.7],
+                    colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+              ),
+              child: Image.network(coverImage.toString()),
+            ),
+            SizedBox(height: h*0.03,),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  selectFileToMessage("food");
+                },
+                child: Container(
+                  height: h * 0.05,
+                  width: w * 0.1,
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.3, 0.7],
+                          colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                      borderRadius: BorderRadius.circular(w * 0.06)),
+                  child: Center(
+                      child: Text(
+                        "Add Image",
+                        style: TextStyle(
+                            fontSize: w * 0.012,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      )),
                 ),
-                child: Image.network(coverImage.toString()),
               ),
             ),
             SizedBox(height: h*0.03,),
@@ -129,8 +148,8 @@ class _AddItemsState extends ConsumerState<AddItems> {
                   addCategory();
                 },
                 child: Container(
-                  height: h * 0.05,
-                  width: w * 0.1,
+                  height: h * 0.06,
+                  width: w * 0.12,
                   decoration: BoxDecoration(
                       gradient: const LinearGradient(
                           begin: Alignment.topLeft,
@@ -140,7 +159,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
                       borderRadius: BorderRadius.circular(w * 0.06)),
                   child: Center(
                       child: Text(
-                        "Add",
+                        "Upload",
                         style: TextStyle(
                             fontSize: w * 0.012,
                             fontWeight: FontWeight.w600,

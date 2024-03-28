@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_side_menu/flutter_side_menu.dart';
 import 'package:foodapp/constans/image_const.dart';
-import 'package:foodapp/feature/adding_category/screen/add_items.dart';
+import 'package:foodapp/feature/adding_category/screen/category_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/sidemenu%20part/booking.dart';
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       /// You can use an AppBar if you want to
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Center(child: const Text('Food App')),
+        title: const Center(child: Text('Food App')),
       ),
 
       // The row is needed to display the current view
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text("Exit",style: TextStyle(fontWeight: FontWeight.w700,fontSize: w*0.015),),
                   SizedBox(width: w*0.01,),
-                  Icon(Icons.exit_to_app)
+                  const Icon(Icons.exit_to_app)
                 ],
               ),
             )),
