@@ -1,14 +1,18 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_side_menu/flutter_side_menu.dart';
+import 'package:foodapp/constans/image_const.dart';
+import 'package:foodapp/feature/adding_category/screen/add_items.dart';
 import 'package:flutter/widgets.dart';
 import 'package:foodapp/constans/color_const.dart';
-import 'package:foodapp/sidemenu%20part/add_items.dart';
 import 'package:foodapp/sidemenu%20part/booking.dart';
 import 'package:foodapp/sidemenu%20part/dashboard.dart';
 import 'package:foodapp/sidemenu%20part/product%20_Adding/product_Home.dart';
 import 'package:foodapp/sidemenu%20part/users.dart';
 import 'package:side_navigation/side_navigation.dart';
 
+import 'constans/color_const.dart';
 import 'constans/image_const.dart';
 import 'main.dart';
 
@@ -19,14 +23,19 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+TextEditingController name = TextEditingController();
+TextEditingController password = TextEditingController();
+TextEditingController email = TextEditingController();
+
 class _HomePageState extends State<HomePage> {
   /// Views to display
   List<Widget> views = const [
-   Dashbored(),
+    Dashbored(),
     Users(),
     Bookings(),
     AddItems(),
     ProductHome(),
+    ProductHome()
   ];
 
   /// The currently selected index of the bar
