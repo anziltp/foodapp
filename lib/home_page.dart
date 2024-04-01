@@ -1,7 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_side_menu/flutter_side_menu.dart';
 import 'package:foodapp/constans/image_const.dart';
 import 'package:foodapp/feature/adding_category/screen/category_page.dart';
 import 'package:flutter/widgets.dart';

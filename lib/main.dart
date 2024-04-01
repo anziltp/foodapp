@@ -9,10 +9,11 @@ import 'package:foodapp/home_page.dart';
 import 'package:foodapp/login%20part/create_account.dart';
 import 'package:foodapp/feature/adding_category/screen/category_page.dart';
 import 'package:foodapp/sidemenu%20part/booking.dart';
+import 'package:foodapp/sidemenu%20part/dashboard.dart';
 import 'package:foodapp/sidemenu%20part/product%20_Adding/add_products.dart';
 import 'package:foodapp/sidemenu%20part/product%20_Adding/product_Home.dart';
 
-import 'Splash_Screen.dart';
+import 'splash/screen/Splash_Screen.dart';
 import 'firebase_options.dart';
 
 var w;
@@ -40,7 +41,7 @@ class FoodApp extends StatelessWidget {
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage() ,
+        home: Dashbored() ,
         theme: ThemeData(
         ),
       ),

@@ -3,7 +3,7 @@ import 'package:foodapp/constans/image_const.dart';
 
 import 'package:foodapp/login%20part/create_account.dart';
 
-import 'main.dart';
+import '../../main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
