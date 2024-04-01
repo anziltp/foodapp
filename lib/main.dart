@@ -19,10 +19,17 @@ import 'firebase_options.dart';
 var w;
 var h;
 
+// void main(){
+//   runApp(FoodApp());
+// }
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+
+Future<void> main()  async {
+  WidgetsFlutterBinding.ensureInitialized(
+
+  );
   await Firebase.initializeApp(
+    
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -41,7 +48,7 @@ class FoodApp extends StatelessWidget {
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Dashbored() ,
+        home: HomePage() ,
         theme: ThemeData(
         ),
       ),
