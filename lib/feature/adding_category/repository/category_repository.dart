@@ -20,9 +20,17 @@ CollectionReference get _Category=>_firestore.collection("Categories");
 
   }
 
-category(category,image){
-CategoryModel categoryModel=CategoryModel(category: category, image: image);
-_Category.add(categoryModel.toMap());
+category(category,image,id){
+CategoryModel categoryModel=CategoryModel(category: category, image: image, id: id);
+_Category.add(categoryModel.toMap()).then((value){
+  value.update(categoryModel.copyWith(id: value.id).toMap());
+});
+}
+updateCategoryData(CategoryModel categoryModel){
+    _Category.doc(categoryModel.id).update(categoryModel.toMap());
+}
+deleteCategory(String id){
+    _Category.doc(id).delete();
 }
 
 }

@@ -1,12 +1,11 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodapp/constans/snack_bar_page.dart';
 import 'package:foodapp/feature/adding_category/controller/category_controller.dart';
+import 'package:foodapp/feature/adding_category/screen/update_category.dart';
 
 import '../../../constans/color_const.dart';
 import '../../../main.dart';
@@ -37,7 +36,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
 
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Uploading...")));
+        .showSnackBar(const SnackBar(content: Text("Loading......")));
     uploadFileToFireBase(name, fileBytes);
 
     setState(() {});
@@ -48,7 +47,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
         .ref('Categories/${DateTime.now().toString()}-$name')
         .putData(fileBytes, SettableMetadata(contentType: 'image/jpeg'));
     final snapshot = await uploadTask?.whenComplete(() {});
-    coverImage = (await snapshot?.ref?.getDownloadURL())!;
+    coverImage = (await snapshot?.ref.getDownloadURL())!;
 
     // ignore: use_build_context_synchronously
     // showUploadMessage(context, '$name Uploaded Successfully...');
@@ -61,9 +60,14 @@ class _AddItemsState extends ConsumerState<AddItems> {
   addCategory() {
     ref
         .read(categoryControllerProvider)
-        .category(category: category.text, image: coverImage.toString());
+        .category(category: category.text, image: coverImage.toString(),id: "");
+    showSnackBar(context, "Uploading...");
     coverImage = "";
     category.clear();
+  }
+  deleteCategory(String id){
+    ref.read(categoryControllerProvider).deleteCategories(id);
+    showSnackBar(context, "Deleting.....");
   }
 
   @override
@@ -84,7 +88,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
                     stops: [0.3, 0.7],
                     colors: [Color(0xffF9881F), Color(0xffFF774C)]),
               ),
-              child: Image.network(coverImage.toString()),
+              child: Image.network(coverImage.toString(),fit: BoxFit.cover,),
             ),
             SizedBox(
               height: h * 0.03,
@@ -185,14 +189,14 @@ class _AddItemsState extends ConsumerState<AddItems> {
               return ListView.separated(
                 shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return Column(
+                    return Row(
 
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        Container(
                           height: h*0.2,
-                          width: w*0.3,
-                          // color: Colors.grey,
+                          width: w*0.25,
+                          color: Colors.grey,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -201,8 +205,6 @@ class _AddItemsState extends ConsumerState<AddItems> {
                                 fontSize: w*0.02,
                                 color: Colors.black
                               ),),
-
-                              SizedBox(width: w*0.1,),
                               Container(
                                 height: w*0.08,
                                 width: w*0.08,
@@ -212,18 +214,44 @@ class _AddItemsState extends ConsumerState<AddItems> {
                                 ),
                                 child: Image.network(data[index].image),
                               ),
-                              Container(
+
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: w*0.02,),
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                deleteCategory(data[index].id);
+                              },
+                              child: Container(
                                 height: w*0.03,
                                 width: w*0.03,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(w*0.03),
-                                  color: Colors.red
+                                    borderRadius: BorderRadius.circular(w*0.03),
+                                    color: Colors.red
                                 ),
-                                child: Icon(Icons.delete_outlined,color: ColorConst.white,),
-                              )
-                            ],
-                          ),
-                        )
+                                child: const Icon(Icons.delete_outlined,color: ColorConst.white,),
+                              ),
+                            ),
+                            SizedBox(height: h*0.02,),
+                            GestureDetector(
+                              onTap:() {
+                                Navigator.push(context, CupertinoPageRoute(builder: (context) =>UpdateCategory(model: data[index],),));
+                              },
+                              child: Container(
+                                height: w*0.03,
+                                width: w*0.03,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(w*0.03),
+                                    color: Colors.red
+                                ),
+                                child: const Icon(Icons.edit,color: ColorConst.white,),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     );
                   },
@@ -236,7 +264,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
             },
 
               loading: () {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             },)
 
           ],

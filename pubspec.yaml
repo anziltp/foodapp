@@ -39,7 +39,6 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_svg: ^2.0.9
   pinput: ^3.0.1
-  flutter_side_menu: ^0.4.0
   firebase_core: ^2.24.2
   firebase_storage: ^11.6.0
   cloud_firestore: ^4.14.0
