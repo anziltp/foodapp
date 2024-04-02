@@ -18,16 +18,17 @@ Future<void> main() async {
 // }
 
 
-Future<void> main()  async {
-  WidgetsFlutterBinding.ensureInitialized(
+  Future<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized(
 
-  );
-  await Firebase.initializeApp(
+    );
+    await Firebase.initializeApp(
 
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  runApp( const ProviderScope(child: FoodApp()));
+    runApp(const ProviderScope(child: FoodApp()));
+  }
 }
 class FoodApp extends StatelessWidget {
   const FoodApp({super.key});
@@ -50,4 +51,4 @@ class FoodApp extends StatelessWidget {
     );
 
   }
-}}
+}

@@ -1,4 +1,4 @@
-class streemmodel{
+class StreemModel{
   String name;
   String email;
   String password;
@@ -7,32 +7,48 @@ class streemmodel{
 
 
 
-  streemmodel({
+  StreemModel({
     required this.name,
     required this.email,
     required this.password,
-    required this.number
+    required this.number,
+    required this.image,
 
   });
   Map<String,dynamic> toMap() {
     return {
       "name": name,
-      "password": price,
+      "email": email,
+      "password": password,
+      "number":number,
+      "image":image,
 
 
     };
   }
-  factory streemmodel.fromMap(Map<String,dynamic>map){
-    return streemmodel(name: map['name']??'',
-      price: map['price']??'',);
+  factory StreemModel.fromMap(Map<String,dynamic>map){
+    return StreemModel(name: map['name']??'',
+      email: map['email']??'',
+      password: map['password']??'',
+      number: map['number']??'',
+      image: map['image']??'',
+    );
   }
-  streemmodel copywith({
+  StreemModel copywith({
     String? name,
-    String? price,
+    String? email,
+    String? password,
+    String? number,
+    String? image,
 
   }){
-    return streemmodel(
+    return StreemModel(
       name: name??this.name,
-      price: price??this.price, );
+      email: email??this.email,
+      password: password??this.password,
+      number: number??this.number,
+      image: image??this.image,
+
+    );
   }
 }
