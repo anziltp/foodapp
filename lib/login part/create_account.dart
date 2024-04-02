@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 
 
 import '../constans/color_const.dart';
@@ -127,7 +125,6 @@ class _CreatePageState extends State<CreatePage> {
                           child: const Center(child: Text("login",style: TextStyle(
                               color: ColorConst.white,fontWeight: FontWeight.w700
                           ),)),
-
                                               ),
                         ),
 
