@@ -73,6 +73,9 @@ class _AddItemsState extends ConsumerState<AddItems> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +91,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
                     stops: [0.3, 0.7],
                     colors: [Color(0xffF9881F), Color(0xffFF774C)]),
               ),
-              child: Image.network(coverImage.toString(),fit: BoxFit.cover,),
+              child: value==true?Image.network(coverImage.toString(),fit: BoxFit.cover,):const Icon(Icons.image),
             ),
             SizedBox(
               height: h * 0.03,
@@ -96,6 +99,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
             Center(
               child: GestureDetector(
                 onTap: () {
+                  value=true;
                   selectFileToMessage("food");
                 },
                 child: Container(

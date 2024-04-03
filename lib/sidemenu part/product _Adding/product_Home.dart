@@ -43,7 +43,7 @@ class _ProductHomeState extends State<ProductHome> {
                       borderRadius: BorderRadius.circular(w * 0.06),
                       border: Border.all(
                           color: ColorConst.primerycolor, width: w * 0.003)),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(Icons.photo),
@@ -68,7 +68,7 @@ class _ProductHomeState extends State<ProductHome> {
                         borderRadius: BorderRadius.circular(w * 0.06),
                         border: Border.all(
                             color: ColorConst.primerycolor, width: w * 0.003)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Icon(Icons.add),
