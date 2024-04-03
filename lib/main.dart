@@ -6,12 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:foodapp/home_page.dart';
 
+import 'feature/users streem/screen/users.dart';
 import 'firebase_options.dart';
 
 var w;
 var h;
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
 
 // void main(){
 //   runApp(FoodApp());
@@ -29,7 +28,8 @@ Future<void> main() async {
 
     runApp(const ProviderScope(child: FoodApp()));
   }
-}
+
+
 class FoodApp extends StatelessWidget {
   const FoodApp({super.key});
 

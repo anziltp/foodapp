@@ -3,17 +3,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/constans/image_const.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../main.dart';
+class _SalesData {
+  _SalesData(this.year, this.sales);
 
+  final String year;
+  final double sales;
+}
 class Dashbored extends StatefulWidget {
   const Dashbored({super.key});
 
   @override
   State<Dashbored> createState() => _DashboredState();
 }
+List food=[
+  {
+    "items":"https://coolfooddude.com/wp-content/uploads/2020/08/SFS_Classic_Sirloin_Blend_030-2-scaled.jpg",
+    "name":"burger",
+    "order":"3100+orders"
+  },
+  {
+    "items":"https://th.bing.com/th/id/OIP.ildCrKedl5wZSDvDouexMQHaEo?rs=1&pid=ImgDetMain",
+    "name":"pizza",
+    "order":"3100+orders"
+  },
+  {
+    "items":"https://th.bing.com/th/id/OIP.XEu76rG-R9zr60weudFvWgHaHa?w=2590&h=2590&rs=1&pid=ImgDetMain",
+    "name":"chicken fry",
+    "order":"3100+orders"
+  }, {
+    "items":"https://th.bing.com/th/id/OIP.ltbGhp_gCKKtHR2oRQWR5gHaEK?rs=1&pid=ImgDetMain",
+    "name":"shawarma",
+    "order":"3100+orders"
+  },
 
+
+];
+List deliver=[
+
+  {
+    "boy":"https://static.foxnews.com/foxnews.com/content/uploads/2022/12/lionel-messi1.jpg"
+  },
+  {
+    "boy":"https://static.fanpage.it/wp-content/uploads/sites/27/2020/04/cristiano-ronaldo-real-madrid.jpg"
+  },
+  {
+    "boy":"https://th.bing.com/th/id/OIP.F5mNKW0SbOT_HgvtnQu0DgHaFC?rs=1&pid=ImgDetMain"
+  },
+  {
+    "boy":"https://superstarsbio.com/wp-content/uploads/2019/01/Mesut-Ozil-1.jpg"
+  }
+];
 class _DashboredState extends State<Dashbored> {
+  List<_SalesData> data = [
+    _SalesData('Jan', 30),
+    _SalesData('Feb', 28),
+    _SalesData('Mar', 20),
+    _SalesData('Apr', 25),
+    _SalesData('May', 19)
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,10 +251,27 @@ class _DashboredState extends State<Dashbored> {
                    height: w*0.33,
                    width: w*0.45,
                    decoration: BoxDecoration(
-                       color: Colors.greenAccent,
+                       color: Colors.white,
+                     boxShadow: [BoxShadow(color: Colors.black,blurRadius: w*0.001)],
                      borderRadius: BorderRadius.circular(w*0.03)
                    ),
-
+child: SfCartesianChart(
+    primaryXAxis: CategoryAxis(),
+    // Chart title
+    title: ChartTitle(text: 'Half yearly sales analysis'),
+    // Enable legend
+    legend: Legend(isVisible: true),
+    // Enable tooltip
+    tooltipBehavior: TooltipBehavior(enable: true),
+    series: <CartesianSeries<_SalesData, String>>[
+      LineSeries<_SalesData, String>(
+          dataSource: data,
+          xValueMapper: (_SalesData sales, _) => sales.year,
+          yValueMapper: (_SalesData sales, _) => sales.sales,
+          name: 'Sales',
+          // Enable data label
+          dataLabelSettings: DataLabelSettings(isVisible: true))
+    ]),
                  ),
                   Column(
                     children: [
@@ -212,46 +279,63 @@ class _DashboredState extends State<Dashbored> {
                         height: h*0.5,
                         width: w*0.2,
                         decoration: BoxDecoration(
-                            color: Colors.redAccent,
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(w*0.03)
                         ),
-                        child: ListView.separated(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
-                            itemBuilder: (context, index) {
-
-                        return Padding(
-                          padding:  EdgeInsets.all(w*0.01),
-                          child: Container(
-                           height: h*0.09,
-                            width:w*0.09,
-                           decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(w*0.03),
-                             color: Colors.white
-                           ),
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: w*0.03,
-                                  backgroundImage: NetworkImage("https://th.bing.com/th/id/OIP.lvo_KabXt4QK00Ad0aOskgHaE8?w=334&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7")),
-
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text("special chiken",style: TextStyle(fontWeight: FontWeight.w800),),
-                                    Text("3245+ orders")
-                                  ],
-                                )
-                              ],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:  EdgeInsets.only(top:w*0.01,left:w* 0.02),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                   Text("most popular items",style: TextStyle(fontWeight: FontWeight.w800),),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                        },
-                            separatorBuilder:  (context, index) {
-                           return SizedBox(height: w*0.01,);
-                        },
-                            itemCount: 1),
+                            ListView.separated(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+
+                                physics: BouncingScrollPhysics(
+                                ),
+                                itemBuilder: (context, index) {
+
+                            return Padding(
+                              padding:  EdgeInsets.only(top:w*0.01,left: w*0.01,right: w*0.01),
+                              child: Container(
+                               height: h*0.09,
+                                width:w*0.09,
+                               decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(w*0.03),
+                                 color: Colors.white,
+                                 boxShadow: [BoxShadow(color: ColorConst.primerycolor,blurRadius: w*0.002)]
+                               ),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: w*0.03,
+                                      backgroundImage: NetworkImage(food[index]["items"],),),
+
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(food[index]["name"],style: TextStyle(fontWeight: FontWeight.w800),),
+                                        Text(food[index]["order"])
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                            },
+                                separatorBuilder:  (context, index) {
+                               return SizedBox(height: w*0.001,);
+                            },
+                                itemCount: food.length),
+                          ],
+                        ),
                       ),
 SizedBox(height: w*0.01,),
 Container(
@@ -259,7 +343,8 @@ Container(
   width: w*0.2,
 
   decoration: BoxDecoration(borderRadius: BorderRadius.circular(w*0.03),
-    color: Colors.redAccent,),
+    color: Colors.white,
+  boxShadow: [BoxShadow(color: Colors.black,blurRadius: w*0.002)]),
   child: Column(
 
     children: [
@@ -271,15 +356,18 @@ Container(
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               return
-        CircleAvatar(
-        radius: w*0.03,
-        backgroundColor: Colors.cyan,
-        backgroundImage:NetworkImage("https://th.bing.com/th/id/OIP.lvo_KabXt4QK00Ad0aOskgHaE8?w=334&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7") ,
+        Padding(
+          padding:  EdgeInsets.all(w*0.01),
+          child: CircleAvatar(
+          radius: w*0.03,
+          backgroundColor: Colors.cyan,
+          backgroundImage:NetworkImage(deliver[index]["boy"]) ,
+          ),
         );
         }, separatorBuilder: (context, index) {
-          return SizedBox(width: w*0.01,);
+          return SizedBox(width: w*0.0001,);
         
-        }, itemCount: 1),
+        }, itemCount: deliver.length),
       ),
     ],
   ),

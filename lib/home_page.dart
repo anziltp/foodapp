@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   /// Views to display
   List<Widget> views = const [
     Dashbored(),
-    Users(),
+    UsersPage(),
     Bookings(),
     AddItems(),
     ProductHome(),
@@ -45,7 +45,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       /// You can use an AppBar if you want to
       appBar: AppBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: ColorConst.seondarycolor,
+        elevation: 0,
         title: const Center(child: Text('Food App')),
       ),
 

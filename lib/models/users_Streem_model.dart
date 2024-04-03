@@ -2,7 +2,6 @@ class StreemModel{
   String name;
   String email;
   String password;
-  String number;
   String image;
 
 
@@ -11,7 +10,6 @@ class StreemModel{
     required this.name,
     required this.email,
     required this.password,
-    required this.number,
     required this.image,
 
   });
@@ -20,7 +18,6 @@ class StreemModel{
       "name": name,
       "email": email,
       "password": password,
-      "number":number,
       "image":image,
 
 
@@ -30,7 +27,6 @@ class StreemModel{
     return StreemModel(name: map['name']??'',
       email: map['email']??'',
       password: map['password']??'',
-      number: map['number']??'',
       image: map['image']??'',
     );
   }
@@ -38,7 +34,6 @@ class StreemModel{
     String? name,
     String? email,
     String? password,
-    String? number,
     String? image,
 
   }){
@@ -46,7 +41,6 @@ class StreemModel{
       name: name??this.name,
       email: email??this.email,
       password: password??this.password,
-      number: number??this.number,
       image: image??this.image,
 
     );
