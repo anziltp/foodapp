@@ -15,9 +15,8 @@ CategoryRepository({required FirebaseFirestore firestore }):_firestore=firestore
 
 CollectionReference get _Category=>_firestore.collection("Categories");
 
-  streamData(){
+  streamingData(){
     return _Category.snapshots().map((event) => event.docs.map((e) => CategoryModel.fromMap(e.data() as Map<String,dynamic>)).toList());
-
   }
 
 category(category,image,id){

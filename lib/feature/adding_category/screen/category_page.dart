@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/constans/snack_bar_page.dart';
 import 'package:foodapp/feature/adding_category/controller/category_controller.dart';
@@ -58,9 +61,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
   }
 
   addCategory() {
-    ref
-        .read(categoryControllerProvider)
-        .category(category: category.text, image: coverImage.toString(),id: "");
+    ref.read(categoryControllerProvider).category(category: category.text, image: coverImage.toString(),id: "");
     showSnackBar(context, "Uploading...");
     coverImage = "";
     category.clear();
@@ -193,9 +194,9 @@ class _AddItemsState extends ConsumerState<AddItems> {
               return ListView.separated(
                 shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return Row(
+                    return Column(
 
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           height: h*0.2,
@@ -209,6 +210,8 @@ class _AddItemsState extends ConsumerState<AddItems> {
                                 fontSize: w*0.02,
                                 color: Colors.black
                               ),),
+
+                              SizedBox(width: w*0.1,),
                               Container(
                                 height: w*0.08,
                                 width: w*0.08,
