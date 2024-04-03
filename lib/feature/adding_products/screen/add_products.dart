@@ -4,23 +4,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/models/category_model.dart';
+import 'package:foodapp/models/items_model.dart';
 
 import 'package:image_picker/image_picker.dart';
 
 import '../../../main.dart';
 import '../../../models/user_model.dart';
+import '../controller/item_controller.dart';
 
 
-class AddProducts extends StatefulWidget {
+class AddProducts extends ConsumerStatefulWidget {
  final CategoryModel category;
    AddProducts({super.key,required this.category});
 
   @override
-  State<AddProducts> createState() => _AddProductsState();
+  ConsumerState<AddProducts> createState() => _AddProductsState();
 }
 
-class _AddProductsState extends State<AddProducts> {
+class _AddProductsState extends ConsumerState<AddProducts> {
   String imgUrl = 'https://cdn.pixabay.com/photo/2017/02/07/02/16/cloud-2044823_960_720.png';
 
   PlatformFile? pickFile;
@@ -29,6 +32,7 @@ class _AddProductsState extends State<AddProducts> {
   String? coverImage;
   String? chooseitem;
 
+String categoryId="";
 
   bool coverPhoto=false;
 
@@ -102,6 +106,20 @@ class _AddProductsState extends State<AddProducts> {
     }
     setState(() {});
   }
+
+addingItemsss(){
+    ItemModel itemnew=ItemModel(
+        ItemName: nameController.text,
+        ItemDescription: descriptionController.text,
+        ItemImage: coverImage.toString(),
+        ItemPrice: rateController.text,
+        ItemId: "",
+        Fav: []
+    );
+
+    ref.watch(itemsControllerprovider).addingItems(categoryId:widget.category.id, itemAdding: itemnew);
+
+}
 
 
   getImageDetails() {
@@ -230,7 +248,7 @@ class _AddProductsState extends State<AddProducts> {
                       textCapitalization: TextCapitalization.sentences,
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.done,
-                      readOnly: true,
+                       enabled: false,
                       style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
                       decoration: InputDecoration(
                         filled: true,
@@ -370,9 +388,10 @@ class _AddProductsState extends State<AddProducts> {
                 SizedBox(width: w*0.05,),
                 InkWell(
                   onTap: () {
+                    addingItemsss();
                     getImageDetails();
                     nameController.clear();
-                    categoryController.clear();
+                    // categoryController.clear();
                     rateController.clear();
                     descriptionController.clear();
                     imageUrlList=[];
