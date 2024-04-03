@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
     Bookings(),
     AddItems(),
     ProductHome(),
-    ProductHome()
   ];
 
   /// The currently selected index of the bar
@@ -55,7 +54,6 @@ class _HomePageState extends State<HomePage> {
         children: [
           /// Pretty similar to the BottomNavigationBar!
           SideNavigationBar(
-
             selectedIndex: selectedIndex,
             footer: SideNavigationBarFooter(label: InkWell(
               onTap: () {
@@ -110,11 +108,11 @@ class _HomePageState extends State<HomePage> {
               ),
               SideNavigationBarItem(
                 icon: Icons.import_export,
-                label: 'Items',
+                label: 'Categories',
               ),
               SideNavigationBarItem(
                 icon: Icons.production_quantity_limits,
-                label: 'Products',
+                label: 'Items',
               ),
 
             ],

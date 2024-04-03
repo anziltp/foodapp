@@ -4,6 +4,7 @@ import 'package:foodapp/models/category_model.dart';
 
 
 final categoryControllerProvider=Provider((ref) => CategoryController(categoryRepository: ref.watch(categoryRepositoryProvider)));
+
 final streamDataProvider=StreamProvider((ref) => ref.watch(categoryControllerProvider).streamData());
 
 class CategoryController{
@@ -11,15 +12,17 @@ class CategoryController{
   CategoryController({required CategoryRepository categoryRepository}):_categoryRepository=categoryRepository;
 
  Stream streamData(){
-    return _categoryRepository.streamData();
+    return _categoryRepository.streamingData();
   }
 
   category({required category,required image,required id}){
 _categoryRepository.category(category, image,id);
   }
+
   categoryUpdate(CategoryModel categoryModel){
    _categoryRepository.updateCategoryData(categoryModel);
   }
+
   deleteCategories(String id){
    _categoryRepository.deleteCategory(id);
   }

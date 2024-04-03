@@ -4,15 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:foodapp/models/category_model.dart';
 
 import 'package:image_picker/image_picker.dart';
 
-import '../../main.dart';
-import '../../models/user_model.dart';
+import '../../../main.dart';
+import '../../../models/user_model.dart';
 
 
 class AddProducts extends StatefulWidget {
-  const AddProducts({super.key});
+ final CategoryModel category;
+   AddProducts({super.key,required this.category});
 
   @override
   State<AddProducts> createState() => _AddProductsState();
@@ -31,7 +33,7 @@ class _AddProductsState extends State<AddProducts> {
   bool coverPhoto=false;
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController placeController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
   TextEditingController rateController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
@@ -114,7 +116,7 @@ class _AddProductsState extends State<AddProducts> {
 
     Usermodel userModelData = Usermodel(
         name: nameController.text,
-        price: rateController.text
+        price: rateController.text, favourite: []
         // place: placeController.text,
         // rate: double.tryParse(rateController.text),
         // image: coverImage.toString(),
@@ -130,6 +132,13 @@ class _AddProductsState extends State<AddProducts> {
       // "rate":rateController.text,
       // "image": urlDownlod
     // );
+  }
+
+  @override
+  void didChangeDependencies() {
+    categoryController.text=widget.category.category;
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
   }
 
   @override
@@ -214,36 +223,36 @@ class _AddProductsState extends State<AddProducts> {
                       )),
                 ),
                 SizedBox(width: w * 0.01,),
-                // Container(
-                //   width: w * 0.4,
-                //   child: TextFormField(
-                //       controller: placeController,
-                //       textCapitalization: TextCapitalization.sentences,
-                //       keyboardType: TextInputType.text,
-                //       textInputAction: TextInputAction.done,
-                //       style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
-                //       decoration: InputDecoration(
-                //         filled: true,
-                //         labelText: "Place",
-                //         labelStyle:
-                //         TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
-                //         hintText: "place of hotel",
-                //         hintStyle: TextStyle(
-                //           fontSize: w * 0.015,
-                //           fontWeight: FontWeight.w500,
-                //         ),
-                //         enabledBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //               color: Colors.grey,
-                //             ),
-                //             borderRadius: BorderRadius.circular(w * 0.01)),
-                //         focusedBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //               color: Colors.blue,
-                //             ),
-                //             borderRadius: BorderRadius.circular(w * 0.01)),
-                //       )),
-                // ),
+                Container(
+                  width: w * 0.4,
+                  child: TextFormField(
+                      controller: categoryController,
+                      textCapitalization: TextCapitalization.sentences,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      readOnly: true,
+                      style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                      decoration: InputDecoration(
+                        filled: true,
+                        labelText: "category",
+                        labelStyle:
+                        TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
+                        hintStyle: TextStyle(
+                          fontSize: w * 0.015,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(w * 0.01)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                            borderRadius: BorderRadius.circular(w * 0.01)),
+                      )),
+                ),
               ],
             ),
             SizedBox(height: w*0.01,),
@@ -363,7 +372,7 @@ class _AddProductsState extends State<AddProducts> {
                   onTap: () {
                     getImageDetails();
                     nameController.clear();
-                    placeController.clear();
+                    categoryController.clear();
                     rateController.clear();
                     descriptionController.clear();
                     imageUrlList=[];
