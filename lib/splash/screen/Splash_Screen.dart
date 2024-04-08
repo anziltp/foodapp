@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/constans/image_const.dart';
 
 import 'package:foodapp/login%20part/create_account.dart';
@@ -24,7 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-Center(child: Image.asset(ImageConst.splashscreen,width: w*0.09,))
+Center(child: Image.asset(ImageConst.splashscreen,width: w*0.09,),
+
+),
+          SizedBox(height: h*0.04,),
+          Text("Yum Yard",style: TextStyle(fontWeight: FontWeight.w800,color: ColorConst.primerycolor,fontSize: w*0.02),)
         ],
       ),
     );

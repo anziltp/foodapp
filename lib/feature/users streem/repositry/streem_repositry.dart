@@ -14,5 +14,7 @@ class UserRepository{
   usersData(){
     return _userdata.snapshots().map((event) => event.docs.map((e) => StreemModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
-
+deleteUser(String id){
+  _userdata.doc(id).delete();
+}
 }

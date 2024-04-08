@@ -32,7 +32,14 @@ class _CreatePageState extends State<CreatePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Center(child: Image.asset(ImageConst.splashscreen,width: w*0.09,)),
+                Column(
+                  children: [
+                    Center(child: Image.asset(ImageConst.splashscreen,width: w*0.09,)),
+                    SizedBox(height: h*0.03,),
+                    Text("Yum Yard",style: TextStyle(fontWeight: FontWeight.w800,color: ColorConst.primerycolor,fontSize: w*0.02),)
+                  ],
+                ),
+
                 Column(
                   children: [
                     Container(

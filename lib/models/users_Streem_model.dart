@@ -3,6 +3,7 @@ class StreemModel{
   String email;
   String password;
   String image;
+  String id;
 
 
 
@@ -11,6 +12,7 @@ class StreemModel{
     required this.email,
     required this.password,
     required this.image,
+    required this.id,
 
   });
   Map<String,dynamic> toMap() {
@@ -19,6 +21,7 @@ class StreemModel{
       "email": email,
       "password": password,
       "image":image,
+      "id":id,
 
 
     };
@@ -28,6 +31,7 @@ class StreemModel{
       email: map['email']??'',
       password: map['password']??'',
       image: map['image']??'',
+      id: map['id']??'',
     );
   }
   StreemModel copywith({
@@ -35,6 +39,7 @@ class StreemModel{
     String? email,
     String? password,
     String? image,
+    String? id,
 
   }){
     return StreemModel(
@@ -42,6 +47,8 @@ class StreemModel{
       email: email??this.email,
       password: password??this.password,
       image: image??this.image,
+      id: id??this.id
+      ,
 
     );
   }

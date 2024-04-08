@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/feature/users%20streem/condroller/streem_condroller.dart';
 
+import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
+import '../repositry/streem_repositry.dart';
 
 class UsersPage extends ConsumerStatefulWidget {
   const UsersPage({super.key});
@@ -13,6 +16,10 @@ class UsersPage extends ConsumerStatefulWidget {
 }
 
 class _UsersPageState extends ConsumerState<UsersPage> {
+  deleteUser(String id){
+    ref.read(userDataRepository).deleteUser(id);
+    showSnackBar(context, "Deleting.....");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,6 +157,19 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w800),
+                                                                ),
+                                                                SizedBox(
+                                                                  height:
+                                                                      h * 0.03,
+                                                                ),
+                                                                Text(
+                                                                  "id : ${data[index].id}",
+                                                                  style: TextStyle(
+                                                                      fontSize: w *
+                                                                          0.02,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800),
                                                                 )
                                                               ],
                                                             ),
@@ -200,9 +220,39 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                                       )
                                     ],
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: w * 0.02),
-                                    child: const Icon(Icons.delete),
+                                  GestureDetector(
+                                    onTap: () {
+                                      showCupertinoModalPopup(context: context, builder: (context) {
+                                        return CupertinoAlertDialog(
+                                          title: const Text("Are you sure\nYou want to delete"),
+                                          actions: [
+                                            Column(
+                                              children: [
+                                                CupertinoDialogAction(child: Text("yes",style: TextStyle(fontSize: w*0.01,fontWeight: FontWeight.w800,color: Colors.red),),
+                                                  onPressed: () {
+                                                    deleteUser(data[index].id);
+                                                    Navigator.pop(context);
+                                                  }, ),
+                                                const Divider(),
+                                                CupertinoDialogAction(child: Text("cancel",style: TextStyle(fontSize: w*0.01,fontWeight: FontWeight.w800),)
+                                                  ,onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },),
+
+                                              ],
+                                            )
+
+
+
+
+                                          ],
+                                        );
+                                      },);
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: w * 0.02),
+                                      child: const Icon(Icons.delete),
+                                    ),
                                   )
                                 ],
                               ),

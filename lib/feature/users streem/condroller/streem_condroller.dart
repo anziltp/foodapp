@@ -11,4 +11,7 @@ class UserController{
   Stream userDetails(){
     return _repository.usersData();
   }
+  deleteUsers(String id){
+    _repository.deleteUser(id);
+  }
 }
