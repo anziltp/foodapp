@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp/constans/image_const.dart';
 import 'package:foodapp/feature/adding_category/screen/category_page.dart';
-import 'package:flutter/widgets.dart';
 import 'package:foodapp/constans/color_const.dart';
+import 'package:foodapp/login%20part/create_account.dart';
 import 'package:foodapp/sidemenu%20part/booking.dart';
 import 'package:foodapp/sidemenu%20part/dashboard.dart';
 import 'package:foodapp/sidemenu%20part/product%20_Adding/product_Home.dart';
@@ -63,7 +63,10 @@ class _HomePageState extends State<HomePage> {
                     actions: [
                       Column(
                         children: [
-                          CupertinoDialogAction(child: Text("yes",style: TextStyle(fontSize: w*0.01,fontWeight: FontWeight.w800,color: Colors.red),)),
+                          CupertinoDialogAction(child: Text("yes",style: TextStyle(fontSize: w*0.01,fontWeight: FontWeight.w800,color: Colors.red),),
+                           onPressed: () {
+                            Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => const CreatePage(),), (route) => false);
+                           }, ),
                           const Divider(),
                           CupertinoDialogAction(child: Text("cancel",style: TextStyle(fontSize: w*0.01,fontWeight: FontWeight.w800),)
                             ,onPressed: () {
@@ -72,6 +75,10 @@ class _HomePageState extends State<HomePage> {
 
                         ],
                       )
+
+
+
+
                     ],
                   );
                 },);
