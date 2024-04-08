@@ -191,81 +191,89 @@ class _AddItemsState extends ConsumerState<AddItems> {
             SizedBox(height: w*0.03,),
 
             ref.watch(streamDataProvider).when(data: (data){
-              return ListView.separated(
-                shrinkWrap: true,
+              return SizedBox(
+                height: h*1,
+                width: w*1,
+                child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4,crossAxisSpacing: w*0.03),
+                  itemCount: data.length,
                   itemBuilder: (context, index) {
-                    return Column(
-
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: h*0.2,
-                          width: w*0.25,
-                          color: Colors.grey,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(data[index].category,style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: w*0.02,
-                                color: Colors.black
-                              ),),
-
-                              SizedBox(width: w*0.1,),
-                              Container(
-                                height: w*0.08,
-                                width: w*0.08,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(w*0.02),
-                                    color: ColorConst.seondarycolor
-                                ),
-                                child: Image.network(data[index].image),
-                              ),
-
-                            ],
-                          ),
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: h*0.2,
+                        width: w*0.25,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(w*0.01),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              stops: [0.3, 0.7],
+                              colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                          border: Border.all()
                         ),
-                        SizedBox(width: w*0.02,),
-                        Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                deleteCategory(data[index].id);
-                              },
-                              child: Container(
-                                height: w*0.03,
-                                width: w*0.03,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(w*0.03),
-                                    color: Colors.red
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(data[index].category,style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: w*0.02,
+                                    color: Colors.white
+                                ),),
+                                Row(
+                                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        deleteCategory(data[index].id);
+                                      },
+                                      child: Container(
+                                        height: w*0.025,
+                                        width: w*0.025,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(w*0.03),
+                                            color: Colors.white
+                                        ),
+                                        child: const Icon(Icons.delete_outlined,color: Colors.red,),
+                                      ),
+                                    ),
+                                    SizedBox(width: w*0.01,),
+                                    GestureDetector(
+                                      onTap:() {
+                                        Navigator.push(context, CupertinoPageRoute(builder: (context) =>UpdateCategory(model: data[index],),));
+                                      },
+                                      child: Container(
+                                        height: w*0.025,
+                                        width: w*0.025,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(w*0.03),
+                                            color: Colors.white
+                                        ),
+                                        child: const Icon(Icons.edit,color: Colors.red,),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                child: const Icon(Icons.delete_outlined,color: ColorConst.white,),
-                              ),
+                              ],
                             ),
-                            SizedBox(height: h*0.02,),
-                            GestureDetector(
-                              onTap:() {
-                                Navigator.push(context, CupertinoPageRoute(builder: (context) =>UpdateCategory(model: data[index],),));
-                              },
-                              child: Container(
-                                height: w*0.03,
-                                width: w*0.03,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(w*0.03),
-                                    color: Colors.red
-                                ),
-                                child: const Icon(Icons.edit,color: ColorConst.white,),
+                            Container(
+                              height: h*0.13,
+                              width: w*0.06,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(w*0.02),
                               ),
+                              child: Image.network(data[index].image),
                             ),
                           ],
                         ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: w*0.02,);
-                  },
-                  itemCount: data.length);
+                      ),
+                    ],
+                  );
+                },),
+              );
             }, error: (error, stackTrace) {
               return Text(error.toString());
             },

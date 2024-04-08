@@ -31,38 +31,73 @@ class _ProductHomeState extends ConsumerState<ProductHome> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(child: Text("latest products",style: TextStyle(
-                  fontWeight: FontWeight.w800,
+                Center(child: Text("Latest Products",style: TextStyle(
+                  fontWeight: FontWeight.w900,
                   fontSize: w*0.02
                 ),))
               ],
             ),
+            SizedBox(height: h*0.03 ,),
             ref.watch(streamDataProvider).when(data: (data) {
-              return ListView.separated(
-                shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
+              return SizedBox(
+                height: h*1,
+                width: w*1,
+                // color: Colors.green,
+                child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4,crossAxisSpacing: w*0.01,mainAxisSpacing: w*0.01,childAspectRatio: 1.7),
+                  itemCount: data.length,
                   itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, CupertinoPageRoute(builder: (context) => AddProducts(category: data[index],),));
-                  },
-                  child: Container(
-                    height: h*0.2,
-                    width: w*0.5,
-                    color: Colors.yellow,
+                  return Container(
+                    height: h*0.1,
+                    width: w*0.05,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(w*0.01),
+                      border: Border.all(),
+                      gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.3, 0.7],
+                          colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                    ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                            height: h*0.1,
-                            child: Image(image: NetworkImage(data[index].image))),
-                        Text(data[index].category)
+                            height: h*0.13,
+                            width: w*0.06,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(w*0.03)
+                            ),
+                            child: Column(
+                              children: [
+                                Image(image: NetworkImage(data[index].image)),
+                              ],
+                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(data[index].category,style: TextStyle(
+                                fontSize: w*0.015,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800
+                            ),),
+                            TextButton(onPressed: () {
+                              Navigator.push(context, CupertinoPageRoute(builder: (context) => AddProducts(category: data[index],),));
+                            }, child: Container(
+                              height: h*0.05,
+                                width: w*0.06,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(w*0.03)
+                                ),
+                                child: Center(child: Text("Add Items",style: TextStyle(
+                                  color: Colors.black
+                                ),))))
+                          ],
+                        )
                       ],
                     ),
-                  ),
-                );
-              }, separatorBuilder: (context, index) {
-                return SizedBox(height: w*0.03,);
-              }, itemCount: data.length);
+                  );
+                },));
             }, error: (error, stackTrace) {
               return Text(error.toString());
             }, loading: () => CircularProgressIndicator(),),

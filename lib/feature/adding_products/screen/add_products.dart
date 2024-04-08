@@ -184,7 +184,6 @@ addingItemsss(){
                 selectFileToMessage("salman");
                 coverPhoto=true;
                 setState(() {
-
                 });
               },
               child: Container(
@@ -341,42 +340,6 @@ addingItemsss(){
                 ),
               ],
             ),
-            SizedBox(height: w*0.01,),
-            // StreamBuilder<QuerySnapshot>(
-            //     stream: FirebaseFirestore.instance.collection("category").snapshots(),
-            //     builder: (context, snapshot) {
-            //
-            //       var categories=snapshot.data!.docs;
-            //
-            //       return Container(
-            //         width: w*0.4,
-            //         height: w*0.035,
-            //         // padding: EdgeInsets.only(left: 16, right: 16),
-            //         decoration: BoxDecoration(
-            //           // color: Colors.grey,
-            //             border: Border.all(color: Colors.grey,width: 1),
-            //             borderRadius: BorderRadius.circular(15)
-            //         ),
-            //         child: DropdownButton(
-            //           borderRadius: BorderRadius.circular(w*0.01),
-            //           underline: SizedBox(),
-            //           isExpanded: true,
-            //           value: chooseitem,
-            //           hint: Text("Category"),
-            //           items: List.generate(categories.length, (index) =>DropdownMenuItem(
-            //
-            //               value: categories[index]['category'],
-            //
-            //               child: Text(categories[index]['category']))),
-            //           onChanged: (newvalue) {
-            //             setState(() {
-            //               chooseitem=newvalue.toString();
-            //             });
-            //           },
-            //         ),
-            //       );
-            //     }
-            // ),
             SizedBox(height: w*0.01,),
 
             Row(
