@@ -33,9 +33,14 @@ List food=[
     "items":"https://th.bing.com/th/id/OIP.XEu76rG-R9zr60weudFvWgHaHa?w=2590&h=2590&rs=1&pid=ImgDetMain",
     "name":"chicken fry",
     "order":"3100+orders"
-  }, {
+  },
+  {
     "items":"https://th.bing.com/th/id/OIP.ltbGhp_gCKKtHR2oRQWR5gHaEK?rs=1&pid=ImgDetMain",
     "name":"shawarma",
+    "order":"3100+orders"
+  }, {
+    "items":"https://th.bing.com/th/id/OIP.RpORXC6CvWeFKbGxnNXlzAHaFP?rs=1&pid=ImgDetMain",
+    "name":"sandwich",
     "order":"3100+orders"
   },
 
@@ -276,7 +281,7 @@ child: SfCartesianChart(
                   Column(
                     children: [
                       Container(
-                        height: h*0.5,
+                        height: h*0.7,
                         width: w*0.2,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -337,41 +342,8 @@ child: SfCartesianChart(
                           ],
                         ),
                       ),
-SizedBox(height: w*0.01,),
-Container(
-  height: h*0.15,
-  width: w*0.2,
 
-  decoration: BoxDecoration(borderRadius: BorderRadius.circular(w*0.03),
-    color: Colors.white,
-  boxShadow: [BoxShadow(color: Colors.black,blurRadius: w*0.002)]),
-  child: Column(
 
-    children: [
-      Text("delivery boys"),
-      Expanded(
-        child: ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return
-        Padding(
-          padding:  EdgeInsets.all(w*0.01),
-          child: CircleAvatar(
-          radius: w*0.03,
-          backgroundColor: Colors.cyan,
-          backgroundImage:NetworkImage(deliver[index]["boy"]) ,
-          ),
-        );
-        }, separatorBuilder: (context, index) {
-          return SizedBox(width: w*0.0001,);
-        
-        }, itemCount: deliver.length),
-      ),
-    ],
-  ),
-)
                     ],
                   )
                 ],

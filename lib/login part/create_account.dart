@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 
 import '../constans/color_const.dart';
@@ -102,15 +100,14 @@ class _CreatePageState extends State<CreatePage> {
                                 formKey.currentState!.validate()
                             )
                             {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => HomePage(),));
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage(),), (route) => false);
                             }else{
                               name.text=="" ? ScaffoldMessenger.of(context).
-                              showSnackBar(SnackBar(content: Text("please enter username"))):
+                              showSnackBar(const SnackBar(content: Text("please enter username"))):
                               password.text=="" ? ScaffoldMessenger.of(context).
-                              showSnackBar(SnackBar(content: Text("please enter password"))):
+                              showSnackBar(const SnackBar(content: Text("please enter password"))):
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(content: Text("enter your valid details")));
+                                  .showSnackBar(const SnackBar(content: Text("enter your valid details")));
                             }
 
                           },
