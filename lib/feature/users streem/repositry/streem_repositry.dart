@@ -13,9 +13,16 @@ class UserRepository{
   CollectionReference get _userdata=>_firestore.collection("Users");
 
   usersData(){
-    return _userdata.snapshots().map((event) => event.docs.map((e) => StreemModel.fromMap(e.data() as Map<String,dynamic>)).toList());
+    return _userdata.where("status",isEqualTo: true).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
 deleteUser(String id){
   _userdata.doc(id).delete();
+}
+blockUser(String id,UserStreemModel userStreemModel){
+_userdata.doc(id).update(
+  userStreemModel.copywith(
+    status: false
+  ).toMap()
+);
 }
 }

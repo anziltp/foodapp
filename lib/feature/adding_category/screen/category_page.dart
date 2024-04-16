@@ -41,17 +41,18 @@ class _AddItemsState extends ConsumerState<AddItems> {
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text("Loading......")));
     uploadFileToFireBase(name, fileBytes);
-
     setState(() {});
   }
-
   Future uploadFileToFireBase(String name, fileBytes) async {
+    print("fggghh");
+    print(fileBytes);
     uploadTask = FirebaseStorage.instance
         .ref('Categories/${DateTime.now().toString()}-$name')
         .putData(fileBytes, SettableMetadata(contentType: 'image/jpeg'));
     final snapshot = await uploadTask?.whenComplete(() {});
     coverImage = (await snapshot?.ref.getDownloadURL())!;
-
+    print("not");
+print(BoxFit.cover);
     // ignore: use_build_context_synchronously
     // showUploadMessage(context, '$name Uploaded Successfully...');
     await Future.delayed(const Duration(seconds: 2));
@@ -92,7 +93,7 @@ class _AddItemsState extends ConsumerState<AddItems> {
                     stops: [0.3, 0.7],
                     colors: [Color(0xffF9881F), Color(0xffFF774C)]),
               ),
-              child: value==true?Image.network(coverImage.toString(),fit: BoxFit.cover,):const Icon(Icons.image),
+              child: value==true?Image.network(coverImage.toString(),fit: BoxFit.cover,scale: 2,):const Icon(Icons.image),
             ),
             SizedBox(
               height: h * 0.03,
