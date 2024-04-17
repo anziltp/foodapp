@@ -51,6 +51,7 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                               height: w * 0.08,
                               width: w * 0.5,
                               decoration: BoxDecoration(
+                                border: Border.all(color: Colors.cyan),
                                 borderRadius: BorderRadius.circular(w * 0.04),
                                 gradient: const LinearGradient(
                                     begin: Alignment.centerLeft,
