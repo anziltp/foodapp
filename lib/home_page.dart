@@ -1,10 +1,14 @@
 
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp/constans/image_const.dart';
 import 'package:foodapp/feature/adding_category/screen/category_page.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/login%20part/create_account.dart';
+import 'package:foodapp/feature/admin_adding/screen/admin_page.dart';
+import 'package:foodapp/feature/adding_banner/screen/banner_page.dart';
 import 'package:foodapp/sidemenu%20part/booking.dart';
 import 'package:foodapp/sidemenu%20part/dashboard.dart';
 import 'package:foodapp/sidemenu%20part/product%20_Adding/product_Home.dart';
@@ -29,11 +33,13 @@ TextEditingController email = TextEditingController();
 class _HomePageState extends State<HomePage> {
   /// Views to display
   List<Widget> views = const [
-    Dashbored(),
+
     UsersPage(),
     Bookings(),
     AddItems(),
     ProductHome(),
+    BannerPage(),
+    AdminPage()
   ];
 
   /// The currently selected index of the bar
@@ -55,6 +61,16 @@ class _HomePageState extends State<HomePage> {
           /// Pretty similar to the BottomNavigationBar!
           SideNavigationBar(
             selectedIndex: selectedIndex,
+            theme: SideNavigationBarTheme(
+
+                itemTheme: SideNavigationBarItemTheme(
+                  unselectedItemColor: ColorConst.black,
+                    selectedItemColor: ColorConst.primerycolor),
+
+                togglerTheme: SideNavigationBarTogglerTheme(
+                    expandIconColor: ColorConst.primerycolor),
+                dividerTheme: SideNavigationBarDividerTheme.standard()),
+
             footer: SideNavigationBarFooter(label: InkWell(
               onTap: () {
                 showCupertinoModalPopup(context: context, builder: (context) {
@@ -92,21 +108,18 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             )),
-            header: SideNavigationBarHeader(image: Image.asset(ImageConst.splashscreen,width: w*0.07,), title:  Text("Yum Yard",style: TextStyle(fontWeight: FontWeight.w700,fontSize: w*0.012,color: ColorConst.primerycolor),), subtitle: Padding(
+            header: SideNavigationBarHeader(image: Image.asset(ImageConst.splashscreen,width: w*0.07,), title:  Text("Yum Yard",style: TextStyle(fontWeight: FontWeight.w700,fontSize: w*0.013,color: ColorConst.primerycolor),), subtitle: Padding(
               padding:  EdgeInsets.only(left:w*0.01),
-              child: const Text("admin",style: TextStyle(fontWeight: FontWeight.w700,color: Colors.grey),),
-            )),
+              child: const Text("admin",style: TextStyle(fontWeight: FontWeight.w700,color: Colors.black),),
+            ),
+            ),
             items: const [
 
-              SideNavigationBarItem(
 
-                icon: Icons.dashboard,
-                label: 'Dashboard',
-
-              ),
               SideNavigationBarItem(
                 icon: Icons.person,
                 label: 'users',
+
 
               ),
               SideNavigationBarItem(
@@ -120,6 +133,14 @@ class _HomePageState extends State<HomePage> {
               SideNavigationBarItem(
                 icon: Icons.production_quantity_limits,
                 label: 'Items',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.photo_library_outlined,
+                label: 'Banner',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.person_3,
+                label: 'Admin',
               ),
 
             ],

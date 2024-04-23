@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/feature/users%20streem/condroller/streem_condroller.dart';
+import 'package:foodapp/feature/users%20streem/screen/block_users.dart';
 
 import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
@@ -31,12 +32,51 @@ class _UsersPageState extends ConsumerState<UsersPage> {
         padding: EdgeInsets.all(w * 0.01),
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BlockUsers(),));
+                  },
+                  child: Container(
+                    height: h * 0.05,
+                    width: w * 0.1,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                      BorderRadius.circular(
+                          w * 0.04),
+                      gradient: const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.bottomRight,
+                          stops: [
+                            0.3,
+                            0.7
+                          ],
+                          colors: [
+                            Color(0xffF9881F),
+                            Color(0xffFF774C)
+                          ]),
+                    ),
+                    child: const Center(
+                        child: Text(
+                          "Blocked users",
+                          style: TextStyle(
+                              fontWeight:
+                              FontWeight.w800),
+                        )),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: h*0.04,),
             Expanded(
                 child: ref.watch(userStream).when(
                       data: (data) {
                         // print("---------------------------");
                         // print(data);
                         return GridView.builder(
+                          
                           itemCount: data.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(

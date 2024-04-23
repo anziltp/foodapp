@@ -7,17 +7,24 @@ import '../../../models/users_Streem_model.dart';
 
 final userControllerRepository=Provider((ref) => UserController(repository: ref.watch(userDataRepository)));
 final userStream=StreamProvider((ref) => ref.watch(userControllerRepository).userDetails());
+ final blockuserStream=StreamProvider((ref) => ref.watch(userControllerRepository).blockuserDetails());
 class UserController{
   final UserRepository _repository;
   UserController({required UserRepository repository}):_repository=repository;
   Stream userDetails(){
     return _repository.usersData();
   }
+  Stream blockuserDetails(){
+    return _repository.blockuserview();
+  }
   deleteUsers(String id){
     _repository.deleteUser(id);
   }
   blockuser(String id,UserStreemModel userStreemModel){
     _repository.blockUser(id, userStreemModel);
+  }
+  unblockuser(String id,UserStreemModel userStreemModel){
+    _repository.unblockUser(id, userStreemModel);
   }
 
 
