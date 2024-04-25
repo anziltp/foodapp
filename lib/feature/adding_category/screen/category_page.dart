@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/constans/snack_bar_page.dart';
 import 'package:foodapp/feature/adding_category/controller/category_controller.dart';
@@ -12,6 +11,8 @@ import 'package:foodapp/feature/adding_category/screen/update_category.dart';
 
 import '../../../constans/color_const.dart';
 import '../../../main.dart';
+import '../../toppings_adding/screen/toppings_page.dart';
+
 
 class AddItems extends ConsumerStatefulWidget {
   const AddItems({super.key});
@@ -193,8 +194,8 @@ print(BoxFit.cover);
 
             ref.watch(streamDataProvider).when(data: (data){
               return SizedBox(
-                height: h*1,
-                width: w*1,
+                height: h*1.3,
+                width: w*1.3,
                 child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4,crossAxisSpacing: w*0.03),
                   itemCount: data.length,
                   itemBuilder: (context, index) {
@@ -260,13 +261,38 @@ print(BoxFit.cover);
                                 ),
                               ],
                             ),
-                            Container(
-                              height: h*0.13,
-                              width: w*0.06,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(w*0.02),
-                              ),
-                              child: Image.network(data[index].image),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: h*0.13,
+                                  width: w*0.06,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(w*0.02),
+                                  ),
+                                  child: Image.network(data[index].image),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ToppingsPage(category: data[index],),));
+                                  },
+                                  child: Container(
+                                    height: h * 0.05,
+                                    width: w * 0.07,
+                                    decoration: BoxDecoration(
+                                          color: ColorConst.white,
+                                        borderRadius: BorderRadius.circular(w * 0.02)),
+                                    child: Center(
+                                        child: Text(
+                                          "add Toppings",
+                                          style: TextStyle(
+                                              fontSize: w * 0.008,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black),
+                                        )),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),

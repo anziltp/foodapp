@@ -16,7 +16,7 @@ class CreatePage extends StatefulWidget {
 class _CreatePageState extends State<CreatePage> {
   final formKey=GlobalKey<FormState>();
 
-  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
   @override
@@ -49,14 +49,14 @@ class _CreatePageState extends State<CreatePage> {
                         color: ColorConst.white,
                       ),
                       child: TextFormField(
-                          controller: name,
-                          keyboardType: TextInputType.name,
+                          controller: email,
+                          keyboardType: TextInputType.emailAddress,
                           autovalidateMode:
                           AutovalidateMode.onUserInteraction,
                           textInputAction: TextInputAction.newline,
                           decoration: InputDecoration(
 
-                            label: Text("User Name",
+                            label: Text(" enter email",
                               style: TextStyle(
                                   color: ColorConst.black,
                                   fontSize: w * 0.01),),
@@ -95,15 +95,15 @@ class _CreatePageState extends State<CreatePage> {
                         InkWell(
                           onTap: () {
                             if(
-                            name.text!=""&&
+                            email.text!=""&&
                                 password.text!=""&&
                                 formKey.currentState!.validate()
                             )
                             {
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage(),), (route) => false);
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage(),), (route) => false);
                             }else{
-                              name.text=="" ? ScaffoldMessenger.of(context).
-                              showSnackBar(const SnackBar(content: Text("please enter username"))):
+                              email.text=="" ? ScaffoldMessenger.of(context).
+                              showSnackBar(const SnackBar(content: Text("please enter email"))):
                               password.text=="" ? ScaffoldMessenger.of(context).
                               showSnackBar(const SnackBar(content: Text("please enter password"))):
                               ScaffoldMessenger.of(context)

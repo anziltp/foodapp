@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/feature/admin_adding/controller/admin_controller.dart';
@@ -53,11 +51,11 @@ class _AdminPageState extends ConsumerState<AdminPage> {
           SizedBox(height: h*0.03,),
           Padding(
             padding:  EdgeInsets.only(left: w*0.23),
-            child: Row(
+            child: const Row(
 
               children: [
 
-                const Text("Email",style: TextStyle(fontWeight: FontWeight.w800),),
+                Text("Email",style: TextStyle(fontWeight: FontWeight.w800),),
               ],
             ),
           ),
@@ -97,9 +95,9 @@ class _AdminPageState extends ConsumerState<AdminPage> {
           SizedBox(height: h*0.05,),
           Padding(
             padding:  EdgeInsets.only(left: w*0.23),
-            child: Row(
+            child: const Row(
               children: [
-                const Text("password",style: TextStyle(fontWeight: FontWeight.w800),),
+                Text("password",style: TextStyle(fontWeight: FontWeight.w800),),
               ],
             ),
           ),
@@ -139,29 +137,32 @@ class _AdminPageState extends ConsumerState<AdminPage> {
           SizedBox(height: h*0.04,),
           Padding(
             padding:  EdgeInsets.only(left: w*0.23),
-            child: Row(
+            child: const Row(
               children: [
 
-                const Text("Role",style: TextStyle(fontWeight: FontWeight.w800),),
+                Text("Role",style: TextStyle(fontWeight: FontWeight.w800),),
               ],
             ),
           ),
           SizedBox(height: h*0.01,),
           Container(
-           height: h*0.08,
             width: w*0.4,
+            height: w*0.04,
             decoration: BoxDecoration(
-                color: Colors.white,
-              borderRadius: BorderRadius.circular(w*0.008),
+              borderRadius: BorderRadius.circular(w*0.01),
               border: Border.all(color: Colors.grey)
             ),
             child: DropdownButton(
+              underline: const SizedBox(),
               hint: Padding(
-                padding:  EdgeInsets.only(left: w*0.02),
-                child: Text("Selected Role "),
+                padding:  EdgeInsets.only(left: w*0.02,top: w*0.01),
+                child: const Text("Selected Role "),
               ),
-              icon: Icon(Icons.arrow_drop_down_sharp),
-
+              icon: Padding(
+                padding:  EdgeInsets.only(left: w*0.27,top: w*0.01),
+                child: const Icon(Icons.arrow_drop_down_sharp),
+              ),
+            borderRadius: BorderRadius.circular(w*0.01),
               style: TextStyle(color: Colors.black, fontSize: w * 0.012),
               value: dropdownvalue,
               items: listItems.map((valueItem) {
