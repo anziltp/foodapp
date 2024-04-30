@@ -24,6 +24,7 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
   UploadTask? uploadTask;
   String? coverImage;
   bool value = false;
+  String categoryId="";
 
   TextEditingController nameController = TextEditingController();
   TextEditingController category = TextEditingController();
@@ -60,19 +61,20 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
     // ScaffoldMessenger.of(context).clearSnackBars();
     setState(() {});
   }
-  addPoppins() {
-    ref.read(toppingsControllerProvider).
-    toppins( category: category.text, name: nameController.text, image: coverImage.toString(),id: "",);
-    showSnackBar(context, "Uploading...");
-    ToppingsModel toppings=ToppingsModel(
-      name: nameController.text,
-      category: category.text,
-      id: "",
-      image: coverImage.toString(),
-
+  addingToppings(){
+    ToppingsModel toppins=ToppingsModel(
+        name: nameController.text,
+       category: category.text,
+        image: coverImage.toString(),
+        id: "",
+        categoryId: widget.category.id
 
     );
+
+    // ref.watch(ToppingsModel(toppins));
+
   }
+
   @override
   void didChangeDependencies() {
     category.text=widget.category.category;
@@ -199,7 +201,7 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
             SizedBox(height: h*0.05,),
             InkWell(
               onTap: () {
-                addPoppins();
+                addingToppings();
               },
               child: Container(
                 height: w * 0.04,
@@ -231,7 +233,7 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
               ),
             ),
             SizedBox( height: h*0.05,),
-            ref.watch(streamtoppings).when(data: (data){
+            ref.watch(streambanner).when(data: (data){
               return SizedBox(
                 height: h*1.5,
                 width: w*1.5,
@@ -279,7 +281,7 @@ mainAxisAlignment: MainAxisAlignment.center,
                                   Container(
                                     height: h*0.13,
                                     width: w*0.06,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color: ColorConst.primerycolor,
 
 

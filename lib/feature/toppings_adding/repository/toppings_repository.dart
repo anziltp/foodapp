@@ -11,13 +11,14 @@ class ToppingsRepository {
 
   ToppingsRepository({required FirebaseFirestore firestore })
       :_firestore=firestore;
-  CollectionReference get _toppings => _firestore.collection("Toppings");
+  CollectionReference get _toppings => _firestore.collection("Categories");
   streamingData(){
     return _toppings.snapshots().map((event) => event.docs.map((e) => ToppingsModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
-  toppings(category,name,image,id){
-    ToppingsModel toppingsModel= ToppingsModel( category: category, name: name,image: image, id: id);
-    _toppings.add(toppingsModel.toMap()).then((value){
+  addToppings({required String toppingId,required ToppingsModel toppingsModel }){
+    _toppings.doc(toppingId).collection("Toppings").add(toppingsModel.toMap()).then((value) {
       value.update(toppingsModel.copyWith(id: value.id).toMap());
     });
-  }}
+  }
+
+}

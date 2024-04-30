@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,8 +11,10 @@ import 'package:foodapp/models/items_model.dart';
 
 import 'package:image_picker/image_picker.dart';
 
+import '../../../constans/color_const.dart';
 import '../../../main.dart';
 import '../../../models/user_model.dart';
+import '../../users streem/condroller/streem_condroller.dart';
 import '../controller/item_controller.dart';
 
 
@@ -112,13 +115,13 @@ addingItemsss(){
         ItemName: nameController.text,
         ItemDescription: descriptionController.text,
         ItemImage: coverImage.toString(),
-        ItemPrice: rateController.text,
+        ItemPrice: double.tryParse(rateController.text)!,
         ItemId: "",
-        Fav: []
+        Fav: [],
+      categoryId: widget.category.id
     );
 
-    ref.watch(itemsControllerprovider).addingItems(categoryId:widget.category.id, itemAdding: itemnew);
-
+    ref.watch(itemAdding(itemnew));
 }
 
 
@@ -163,7 +166,8 @@ addingItemsss(){
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Column(children: [
+          child: Column(
+              children: [
             SizedBox(
               height: w * 0.03,
             ),
@@ -209,7 +213,7 @@ addingItemsss(){
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: w * 0.4,
                   child: TextFormField(
                       controller: nameController,
@@ -228,19 +232,19 @@ addingItemsss(){
                           fontWeight: FontWeight.w500,
                         ),
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.grey,
                             ),
                             borderRadius: BorderRadius.circular(w * 0.01)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.blue,
                             ),
                             borderRadius: BorderRadius.circular(w * 0.01)),
                       )),
                 ),
                 SizedBox(width: w * 0.01,),
-                Container(
+                SizedBox(
                   width: w * 0.4,
                   child: TextFormField(
                       controller: categoryController,
@@ -259,12 +263,12 @@ addingItemsss(){
                           fontWeight: FontWeight.w500,
                         ),
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.grey,
                             ),
                             borderRadius: BorderRadius.circular(w * 0.01)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.blue,
                             ),
                             borderRadius: BorderRadius.circular(w * 0.01)),
@@ -277,12 +281,12 @@ addingItemsss(){
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: w * 0.4,
                   child: TextFormField(
                       controller: rateController,
                       textCapitalization: TextCapitalization.sentences,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.done,
                       style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
                       decoration: InputDecoration(
@@ -296,19 +300,19 @@ addingItemsss(){
                           fontWeight: FontWeight.w500,
                         ),
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.grey,
                             ),
                             borderRadius: BorderRadius.circular(w * 0.01)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.blue,
                             ),
                             borderRadius: BorderRadius.circular(w * 0.01)),
                       )),
                 ),
                 SizedBox(width: w * 0.01,),
-                Container(
+                SizedBox(
                   width: w * 0.4,
                   child: TextFormField(
                       controller: descriptionController,
@@ -327,12 +331,12 @@ addingItemsss(){
                           fontWeight: FontWeight.w500,
                         ),
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.grey,
                             ),
                             borderRadius: BorderRadius.circular(w * 0.01)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.blue,
                             ),
                             borderRadius: BorderRadius.circular(w * 0.01)),
@@ -365,7 +369,7 @@ addingItemsss(){
                     });
 
                     ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text("Successfull")));
+                        .showSnackBar(const SnackBar(content: Text("Successfull")));
                   },
                   child: Container(
                     height: w * 0.04,
@@ -440,6 +444,70 @@ addingItemsss(){
             //     ),
             //   )),
             // ),
+                SizedBox(height: h*0.04,),
+            ref.watch(itemStream(categoryId)).when(
+              data: (data) {
+                // print("---------------------------");
+                // print(data);
+                return Container(
+                  height: h*0.7,
+                  child: GridView.builder(
+
+                    itemCount: data.length,
+                    gridDelegate:
+                    SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisExtent: w * 0.15,
+                      mainAxisSpacing: w * 0.02,
+                      crossAxisSpacing: w * 0.02,
+                      childAspectRatio: 1,
+                    ),
+                    itemBuilder: (context, index) {
+                      return Container(
+                          height: h*0.4,
+                          width: w * 0.3,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.cyan),
+                            borderRadius: BorderRadius.circular(w * 0.04),
+                            gradient: const LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.bottomRight,
+                                stops: [
+                                  0.3,
+                                  0.7
+                                ],
+                                colors: [
+                                  Color(0xffF9881F),
+                                  Color(0xffFF774C)
+                                ]),
+                          ),
+                          child:Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                  height: w*0.07,
+                                  width: w*0.07,
+                                  color: Colors.white,
+                                child:  CircleAvatar(
+                                  radius: w * 0.04,
+                                  backgroundColor: Colors.white,
+                                  backgroundImage:
+                                  NetworkImage(data[index].ItemImage),
+                                ),
+                              ),
+                              Text('Name : ${data[index].ItemName}'),
+                              Text('Price : ${data[index].ItemPrice}'),
+                              Text("Description : ${data[index].ItemDescription}"),
+                            ],
+                          )
+                      );
+                    },
+                  ),
+                );
+              },
+              error: (error, stackTrace) =>  Text(error.toString()),
+              loading: () => const CircularProgressIndicator(),
+            )
           ]),
         ));
   }
