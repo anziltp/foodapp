@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/models/category_model.dart';
@@ -12,10 +13,12 @@ import 'package:foodapp/models/items_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../constans/color_const.dart';
+import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
 import '../../../models/user_model.dart';
 import '../../users streem/condroller/streem_condroller.dart';
 import '../controller/item_controller.dart';
+import '../repository/items_repository.dart';
 
 
 class AddProducts extends ConsumerStatefulWidget {
@@ -118,8 +121,10 @@ addingItemsss(){
         ItemPrice: double.tryParse(rateController.text)!,
         ItemId: "",
         Fav: [],
-      categoryId: widget.category.id
+      categoryId: widget.category.id,
+
     );
+    print("id-----------------------------------$categoryId");
 
     ref.watch(itemAdding(itemnew));
 }
@@ -154,7 +159,10 @@ addingItemsss(){
       // "image": urlDownlod
     // );
   }
-
+  deleteSubItems({required String ItemId,required String categoryid}) {
+    ref.read(itemsRepositoryProvider).deleteSubItems(categoryid: categoryid,ItemId: ItemId);
+    showSnackBar(context, "Deleting.....");
+  }
   @override
   void didChangeDependencies() {
     categoryController.text=widget.category.category;
@@ -445,7 +453,7 @@ addingItemsss(){
             //   )),
             // ),
                 SizedBox(height: h*0.04,),
-            ref.watch(itemStream(categoryId)).when(
+            ref.watch(itemStream(widget.category.id)).when(
               data: (data) {
                 // print("---------------------------");
                 // print(data);
@@ -481,7 +489,7 @@ addingItemsss(){
                                   Color(0xffFF774C)
                                 ]),
                           ),
-                          child:Column(
+                          child:Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
@@ -495,9 +503,62 @@ addingItemsss(){
                                   NetworkImage(data[index].ItemImage),
                                 ),
                               ),
-                              Text('Name : ${data[index].ItemName}'),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Name : ${data[index].ItemName}'),
+
                               Text('Price : ${data[index].ItemPrice}'),
                               Text("Description : ${data[index].ItemDescription}"),
+                                ],
+                              ),
+                               InkWell(
+                                   onTap: () {
+                                     showCupertinoModalPopup(
+                                       context: context,
+                                       builder: (context) {
+                                         return CupertinoAlertDialog(
+                                           title: const Text(
+                                               "Are you sure\nYou want to delete"),
+                                           actions: [
+                                             Column(
+                                               children: [
+                                                 CupertinoDialogAction(
+                                                   child: Text(
+                                                     "yes",
+                                                     style: TextStyle(
+                                                         fontSize: w * 0.01,
+                                                         fontWeight:
+                                                         FontWeight.w800,
+                                                         color: Colors.red),
+                                                   ),
+                                                   onPressed: () {
+                                                     deleteSubItems(ItemId:data[index].ItemId ,categoryid:  data[index].categoryId);
+                                                     Navigator.pop(context);
+                                                   },
+                                                 ),
+                                                 const Divider(),
+                                                 CupertinoDialogAction(
+                                                   child: Text(
+                                                     "cancel",
+                                                     style: TextStyle(
+                                                         fontSize: w * 0.01,
+                                                         fontWeight:
+                                                         FontWeight
+                                                             .w800),
+                                                   ),
+                                                   onPressed: () {
+                                                     Navigator.pop(context);
+                                                   },
+                                                 ),
+                                               ],
+                                             )
+                                           ],
+                                         );
+                                       },
+                                     );
+                                   },
+                                   child: Icon(Icons.delete_outline,size: w*0.03,))
                             ],
                           )
                       );

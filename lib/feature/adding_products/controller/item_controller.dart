@@ -15,16 +15,15 @@ class ItemsController extends StateNotifier{
   final ItemsRepository _itemsRepository;
 
   ItemsController( {required ItemsRepository itemsRepository}):_itemsRepository=itemsRepository,super(null);
+  ///streaming
   Stream<List<ItemModel>> userDetails({required String categoryId}){
     return _itemsRepository.itemData(categoryId);
   }
-
-  deleteUsers(String id){
-    _itemsRepository.deleteUser(id);
+  ///delete
+  deleteSubItems({required String categoryid,required String ItemId}){
+    _itemsRepository.deleteSubItems( categoryid:categoryid, ItemId: ItemId);
   }
-
-
-
+  ///adding
   addingItems({ required ItemModel itemModel}){
       _itemsRepository.addItem(categoryId:itemModel.categoryId ,itemmodel:itemModel );
   }

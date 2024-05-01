@@ -12,13 +12,22 @@ class ItemsRepository{
   ItemsRepository({required FirebaseFirestore firestore}):_firestore=firestore;
 
   CollectionReference get _category=>_firestore.collection("Categories");
+  ///streaming
   Stream<List<ItemModel>>itemData(categoryId){
-   var data= _category.doc("0s58URX2zmyEXD1EgwrI").collection("Subitems").snapshots().map((event) => event.docs.map((e) => ItemModel.fromMap(e.data())).toList());
+   var data= _category.doc(categoryId).collection("Subitems").snapshots().map((event) => event.docs.map((e) => ItemModel.fromMap(e.data())).toList());
     return data;
   }
-  deleteUser(String id){
-    _category.doc(id).delete();
+  ///delete
+  deleteSubItems({required String categoryid,required String ItemId}){
+
+    print("fffffffffffffffffffffiiiiiiiiiiiiiiiiii");
+    print("cat id: $categoryid");
+    print("item id: $ItemId");
+    print("fffffffffffffffffffffllllllllllllllllllldddd");
+
+    _category.doc(categoryid).collection("Subitems").doc(ItemId).delete();
   }
+  ///adding
   addItem({required String categoryId,required ItemModel itemmodel }){
     _category.doc(categoryId).collection("Subitems").add(itemmodel.toMap()).then((value) {
       value.update(itemmodel.copyWith(ItemId: value.id).toMap());

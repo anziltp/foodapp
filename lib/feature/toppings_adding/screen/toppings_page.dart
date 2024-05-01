@@ -71,7 +71,7 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
 
     );
 
-    // ref.watch(ToppingsModel(toppins));
+     ref.watch(toppingsAdding(toppins));
 
   }
 
@@ -175,6 +175,7 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
                       textInputAction: TextInputAction.done,
                       style: TextStyle(fontSize: w * 0.015, fontWeight: FontWeight.w500),
                       decoration: InputDecoration(
+                        enabled: false,
                         filled: true,
                         labelText: "category",
                         labelStyle:
@@ -233,11 +234,11 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
               ),
             ),
             SizedBox( height: h*0.05,),
-            ref.watch(streambanner).when(data: (data){
+            ref.watch(toppingsStream(widget.category.id)).when(data: (data){
               return SizedBox(
                 height: h*1.5,
                 width: w*1.5,
-                child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4,crossAxisSpacing: w*0.03),
+                child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,crossAxisSpacing: w*0.03),
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     return Column(
@@ -259,22 +260,6 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Column(
-mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("name: ${data[index].name}",style: TextStyle(
-
-                                      fontSize: w*0.02,
-                                      color: Colors.white
-                                  ),),
-                                Text("category: ${data[index].category}",style: TextStyle(
-
-                                      fontSize: w*0.02,
-                                      color: Colors.white
-                                  ),),
-
-                                ],
-                              ),
-                              Column(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceEvenly,
                                 children: [
@@ -291,6 +276,23 @@ mainAxisAlignment: MainAxisAlignment.center,
 
                                 ],
                               ),
+                              Column(
+mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("name: ${data[index].name}",style: TextStyle(
+
+                                      fontSize: w*0.02,
+                                      color: Colors.white
+                                  ),),
+                                Text("category: ${data[index].category}",style: TextStyle(
+
+                                      fontSize: w*0.02,
+                                      color: Colors.white
+                                  ),),
+
+                                ],
+                              ),
+                             Icon(Icons.delete_outline,size: w*0.03,)
                             ],
                           ),
                         ),

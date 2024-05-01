@@ -1,24 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodapp/feature/toppings_adding/repository/toppings_repository.dart';
 import 'package:foodapp/models/toppings_model.dart';
 
-import '../repository/toppings_repository.dart';
-
-final toppingsControllerProvider=StateNotifierProvider((ref) => ToppingsController(ToppingsRepository: ref.watch(ToppingsRepositoryProvider), ));
-final addtoppings=Provider.autoDispose.family((ref, String categoryId) => ref.watch(toppingsControllerProvider.notifier).streamToppinsData(categoryId: categoryId));
-
-class ToppingsController  extends StateNotifier {
+final toppingsControllerprovider=StateNotifierProvider((ref) => ToppingsController(toppingsRepository: ref.watch(toppingsRepositoryProvider)));
+final toppingsStream=StreamProvider.autoDispose.family((ref, String categoryId) => ref.watch(toppingsControllerprovider.notifier).userDetails(categoryId: categoryId));
+final toppingsAdding=Provider.autoDispose.family((ref,ToppingsModel toppingsModel) => ref.watch(toppingsControllerprovider.notifier).addingToppings( toppingsModel: toppingsModel));
+class ToppingsController extends StateNotifier {
   final ToppingsRepository _toppingsRepository;
 
-  ToppingsController({required
-  ToppingsRepository ToppingsRepository})
-      :_toppingsRepository=ToppingsRepository,super(null) ;
+  ToppingsController({required ToppingsRepository toppingsRepository})
+      :_toppingsRepository=toppingsRepository,
+        super(null);
 
-  Stream streamToppinsData({required String categoryId} ) {
-    return _toppingsRepository.streamingData();
+  Stream<List<ToppingsModel>> userDetails({required String categoryId}) {
+    return _toppingsRepository.toppingsData(categoryId);
   }
-
-  addingToppings({ required String toppingId,  required ToppingsModel toppingsModel}){
-    _toppingsRepository.addToppings(toppingId:toppingId ,toppingsModel:toppingsModel );
+  addingToppings({ required ToppingsModel toppingsModel}){
+    _toppingsRepository.addToppings(categoryId:toppingsModel.categoryId ,toppingsModel:toppingsModel );
   }
-
 }
