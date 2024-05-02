@@ -62,6 +62,7 @@ print(BoxFit.cover);
     setState(() {});
   }
 
+
   addCategory() {
     ref.read(categoryControllerProvider).category(category: category.text, image: coverImage.toString(),id: "");
     showSnackBar(context, "Uploading...");
@@ -125,9 +126,6 @@ print(BoxFit.cover);
                   )),
                 ),
               ),
-            ),
-            SizedBox(
-              height: h * 0.03,
             ),
             SizedBox(
               width: w * 0.4,

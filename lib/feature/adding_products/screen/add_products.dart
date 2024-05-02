@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/models/category_model.dart';
 import 'package:foodapp/models/items_model.dart';
@@ -503,14 +504,18 @@ addingItemsss(){
                                   NetworkImage(data[index].ItemImage),
                                 ),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Name : ${data[index].ItemName}'),
+                              Container(
+                                width: w*0.15,
+                                color: Colors.blue,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Name : ${data[index].ItemName}'),
 
-                              Text('Price : ${data[index].ItemPrice}'),
-                              Text("Description : ${data[index].ItemDescription}"),
-                                ],
+                                Text('Price : ${data[index].ItemPrice}'),
+                                Text("Description : ${data[index].ItemDescription}"),
+                                  ],
+                                ),
                               ),
                                InkWell(
                                    onTap: () {
