@@ -69,7 +69,11 @@ class _ProductHomeState extends ConsumerState<ProductHome> {
                             ),
                             child: Column(
                               children: [
-                                Image(image: NetworkImage(data[index].image)),
+                                Container(
+                                  height: h*0.13,
+                                    width: w*0.15,
+                                    color: Colors.black,
+                                    child: Image(image: NetworkImage(data[index].image))),
                               ],
                             )),
                         Row(

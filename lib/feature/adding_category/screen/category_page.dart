@@ -127,6 +127,7 @@ print(BoxFit.cover);
                 ),
               ),
             ),
+            SizedBox(height: h*0.03,),
             SizedBox(
               width: w * 0.4,
               child: TextFormField(

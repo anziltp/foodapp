@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodapp/feature/adding_products/screen/update_items.dart';
 import 'package:foodapp/models/category_model.dart';
 import 'package:foodapp/models/items_model.dart';
 
@@ -507,7 +508,19 @@ addingItemsss(){
                               ),
                               Container(
                                 width: w*0.15,
-                                color: Colors.blue,
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.bottomRight,
+                                      stops: [
+                                        0.3,
+                                        0.7
+                                      ],
+                                      colors: [
+                                        Color(0xffF9881F),
+                                        Color(0xffFF774C)
+                                      ]),
+                                ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -518,53 +531,63 @@ addingItemsss(){
                                   ],
                                 ),
                               ),
-                               InkWell(
-                                   onTap: () {
-                                     showCupertinoModalPopup(
-                                       context: context,
-                                       builder: (context) {
-                                         return CupertinoAlertDialog(
-                                           title: const Text(
-                                               "Are you sure\nYou want to delete"),
-                                           actions: [
-                                             Column(
-                                               children: [
-                                                 CupertinoDialogAction(
-                                                   child: Text(
-                                                     "yes",
-                                                     style: TextStyle(
-                                                         fontSize: w * 0.01,
-                                                         fontWeight:
-                                                         FontWeight.w800,
-                                                         color: Colors.red),
-                                                   ),
-                                                   onPressed: () {
-                                                     deleteSubItems(ItemId:data[index].ItemId ,categoryid:  data[index].categoryId);
-                                                     Navigator.pop(context);
-                                                   },
-                                                 ),
-                                                 const Divider(),
-                                                 CupertinoDialogAction(
-                                                   child: Text(
-                                                     "cancel",
-                                                     style: TextStyle(
-                                                         fontSize: w * 0.01,
-                                                         fontWeight:
-                                                         FontWeight
-                                                             .w800),
-                                                   ),
-                                                   onPressed: () {
-                                                     Navigator.pop(context);
-                                                   },
-                                                 ),
+                               Row(
+                                 children: [
+                                   InkWell(
+                                       onTap: () {
+                                         showCupertinoModalPopup(
+                                           context: context,
+                                           builder: (context) {
+                                             return CupertinoAlertDialog(
+                                               title: const Text(
+                                                   "Are you sure\nYou want to delete"),
+                                               actions: [
+                                                 Column(
+                                                   children: [
+                                                     CupertinoDialogAction(
+                                                       child: Text(
+                                                         "yes",
+                                                         style: TextStyle(
+                                                             fontSize: w * 0.01,
+                                                             fontWeight:
+                                                             FontWeight.w800,
+                                                             color: Colors.red),
+                                                       ),
+                                                       onPressed: () {
+                                                         deleteSubItems(ItemId:data[index].ItemId ,categoryid:  data[index].categoryId);
+                                                         Navigator.pop(context);
+                                                       },
+                                                     ),
+                                                     const Divider(),
+                                                     CupertinoDialogAction(
+                                                       child: Text(
+                                                         "cancel",
+                                                         style: TextStyle(
+                                                             fontSize: w * 0.01,
+                                                             fontWeight:
+                                                             FontWeight
+                                                                 .w800),
+                                                       ),
+                                                       onPressed: () {
+                                                         Navigator.pop(context);
+                                                       },
+                                                     ),
+                                                   ],
+                                                 )
                                                ],
-                                             )
-                                           ],
+                                             );
+                                           },
                                          );
                                        },
-                                     );
-                                   },
-                                   child: Icon(Icons.delete_outline,size: w*0.03,))
+                                       child: Icon(Icons.delete_outline,size: w*0.03,)),
+
+                                    InkWell(
+                                     onTap: () {
+                                       Navigator.push(context, CupertinoPageRoute(builder: (context) => UpdateItems(items: data[index]),));
+                                     },
+                                        child: Icon(Icons.edit,size: w*0.024))
+                                 ],
+                               )
                             ],
                           )
                       );
