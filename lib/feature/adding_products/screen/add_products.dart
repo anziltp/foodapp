@@ -123,6 +123,7 @@ addingItemsss(){
         ItemId: "",
         Fav: [],
       categoryId: widget.category.id,
+      CategoryName: categoryController.text,
 
     );
     print("id-----------------------------------$categoryId");

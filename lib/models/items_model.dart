@@ -3,13 +3,14 @@ import 'package:flutter/cupertino.dart';
 class ItemModel {
   String ItemName;
   String ItemImage;
+  String CategoryName;
   String ItemDescription;
   double ItemPrice;
   String ItemId;
   String categoryId;
   List Fav;
 
-  ItemModel({required this.ItemName,required this.ItemDescription,required this.ItemImage,required this.ItemPrice,required this.ItemId,required this.Fav,required this.categoryId});
+  ItemModel({required this.ItemName,required this.ItemDescription,required this.ItemImage,required this.ItemPrice,required this.ItemId,required this.Fav,required this.categoryId,required this.CategoryName,});
 
   Map<String,dynamic> toMap() {
     return {
@@ -19,6 +20,7 @@ class ItemModel {
       "ItemPrice": this.ItemPrice,
       "ItemId":this.ItemId,
       "categoryId":this.categoryId,
+      "CategoryName":this.CategoryName,
       "Fav":this.Fav
     };
   }
@@ -30,7 +32,9 @@ class ItemModel {
       ItemPrice: map["ItemPrice"]??"",
       ItemId: map["ItemId"]??"",
         Fav: map["Fav"]??"",
-      categoryId: map["categoryId"]??""
+      categoryId: map["categoryId"]??"",
+      CategoryName: map["CategoryName"]??"",
+
     );
     }
 
@@ -41,7 +45,8 @@ class ItemModel {
       double? ItemPrice,
       String? ItemId,
       List? Fav,
-      String?categoryId
+      String?categoryId,
+      String?CategoryName,
     })
     {
     return ItemModel(
@@ -51,6 +56,7 @@ class ItemModel {
         ItemPrice: ItemPrice??this.ItemPrice,
         ItemId: ItemId??this.ItemId,
       categoryId: categoryId??this.categoryId,
+      CategoryName: CategoryName??this.CategoryName,
       Fav: Fav??this.Fav
     );
 

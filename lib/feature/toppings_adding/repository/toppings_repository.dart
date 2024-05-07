@@ -25,4 +25,9 @@ class ToppingsRepository {
     _category.doc(categoryId).collection("Toppings").add(toppingsModel.toMap()).then((value) {
       value.update(toppingsModel.copyWith(id: value.id).toMap());
     });
-}}
+}
+  deleteToppings({required String categoryid,required String id}){
+
+    _category.doc(categoryid).collection("Toppings").doc(id).delete();
+  }
+}

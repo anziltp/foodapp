@@ -27,5 +27,9 @@ class ItemsController extends StateNotifier{
   addingItems({ required ItemModel itemModel}){
       _itemsRepository.addItem(categoryId:itemModel.categoryId ,itemmodel:itemModel );
   }
+  itemsUpdate(ItemModel itemModel){
+    _itemsRepository.updateItemsData(itemModel);
+  }
+
 
 }
