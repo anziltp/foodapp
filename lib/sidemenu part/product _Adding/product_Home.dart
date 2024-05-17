@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodapp/models/category_model.dart';
 
 import '../../constans/color_const.dart';
 import '../../feature/adding_category/controller/category_controller.dart';
-import '../../feature/adding_products/controller/item_controller.dart';
 import '../../main.dart';
 import '../../feature/adding_products/screen/add_products.dart';
 
@@ -93,7 +91,7 @@ class _ProductHomeState extends ConsumerState<ProductHome> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(w*0.03)
                                 ),
-                                child: Center(child: Text("Add Items",style: TextStyle(
+                                child: const Center(child: Text("Add Items",style: TextStyle(
                                   color: Colors.black
                                 ),))))
                           ],
@@ -104,7 +102,7 @@ class _ProductHomeState extends ConsumerState<ProductHome> {
                 },));
             }, error: (error, stackTrace) {
               return Text(error.toString());
-            }, loading: () => CircularProgressIndicator(),),
+            }, loading: () => const CircularProgressIndicator(),),
             Padding(
               padding:  EdgeInsets.all(w*0.07),
               child: Row(
@@ -118,7 +116,7 @@ class _ProductHomeState extends ConsumerState<ProductHome> {
                         borderRadius: BorderRadius.circular(w * 0.06),
                         border: Border.all(
                             color: ColorConst.primerycolor, width: w * 0.003)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Icon(Icons.photo),

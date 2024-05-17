@@ -40,7 +40,7 @@ class FoodApp extends StatelessWidget {
       child: MaterialApp(
 
         debugShowCheckedModeBanner: false,
-        home: HomePage() ,
+        home: const HomePage() ,
         theme: ThemeData(
         ),
       ),

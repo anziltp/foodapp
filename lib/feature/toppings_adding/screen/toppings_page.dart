@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodapp/feature/toppings_adding/repository/toppings_repository.dart';
 import 'package:foodapp/models/category_model.dart';
 import 'package:foodapp/models/toppings_model.dart';
 
@@ -73,6 +74,10 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
 
      ref.watch(toppingsAdding(toppins));
 
+  }
+  deleteToppings({required String id,required String categoryid}) {
+    ref.read(toppingsControllerprovider.notifier).deleteToppings(categoryid: categoryid,id: id);
+    showSnackBar(context, "Deleting.....");
   }
 
   @override
@@ -292,7 +297,12 @@ mainAxisAlignment: MainAxisAlignment.center,
 
                                 ],
                               ),
-                             Icon(Icons.delete_outline,size: w*0.03,)
+                             InkWell(
+                               onTap: () {
+                                 deleteToppings(id: data[index].id, categoryid: widget.category.id);
+                                 print("___________________________________________________${widget.category.id}");
+                               },
+                                 child: Icon(Icons.delete_outline,size: w*0.03,))
                             ],
                           ),
                         ),

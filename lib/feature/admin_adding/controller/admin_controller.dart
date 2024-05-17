@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repository/admin_repository.dart';
@@ -14,7 +16,7 @@ class AdminController {
   Stream streamAdminData() {
     return _adminRepository.streamingData();
   }
-  admin({required email, required password,required role,required id}) {
-    _adminRepository.admin(email, password,role,id);
+  admin({required email, required name,required role,required id}) {
+    _adminRepository.admin(email, name,role,id);
   }
 }

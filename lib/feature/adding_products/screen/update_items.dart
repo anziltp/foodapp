@@ -46,7 +46,7 @@ class _UpdateItemsState extends ConsumerState<UpdateItems> {
 
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Uploading...")));
+        .showSnackBar(const SnackBar(content: Text("Uploading...")));
     uploadFileToFireBase(name, fileBytes);
 
     setState(() {});

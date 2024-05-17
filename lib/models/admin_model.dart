@@ -1,31 +1,31 @@
 class AdminModel {
   String email;
-  String password;
+  String name;
   String role;
   String id;
 
   AdminModel(
-      { required this.email, required this.password,required this.role,required this.id});
+      { required this.email, required this.name,required this.role,required this.id});
 
   Map<String, dynamic> toMap() {
-    return { "email": this.email, "password": this.password,"role":this.role,"id":this.id};
+    return { "email": this.email, "password": this.name,"role":this.role,"id":this.id};
   }
 
   factory AdminModel.fromMap(Map<String, dynamic> map) {
     return AdminModel(
 
       email: map["email"] ?? "",
-      password: map["password"] ?? "",
+      name: map["name"] ?? "",
       role: map["role"] ?? "",
       id: map["id"] ?? "",
     );
   }
 
-  AdminModel copyWith({ String? email, String? password, String?role, String?id}) {
+  AdminModel copyWith({ String? email, String? name, String?role, String?id}) {
     return AdminModel(
 
         email: email?? this.email,
-        password: password ?? this.password,
+        name: name ?? this.name,
       role: role?? this.role,
       id: id?? this.id
     );
