@@ -111,6 +111,7 @@ class _UpdateItemsState extends ConsumerState<UpdateItems> {
         categoryId: widget.items.categoryId,
         CategoryName: categoryController.text,
         ItemPrice: double.tryParse(rateController.text)!,
+      search: [],
 
        );
     ref.read(itemsControllerprovider.notifier).itemsUpdate(update);

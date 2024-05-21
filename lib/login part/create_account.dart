@@ -120,6 +120,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                             // {
                               QuerySnapshot<Map<String,dynamic>> admin = await FirebaseFirestore.instance.collection("Admins").where("email",isEqualTo: email.text).where("password",isEqualTo: password.text).get();
                               if(admin.docs.isNotEmpty){
+                                currentRole=admin.docs.first.data()["role"];
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage(),), (route) => false);
                               }
                               else{

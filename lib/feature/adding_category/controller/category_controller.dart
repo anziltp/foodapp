@@ -15,8 +15,8 @@ class CategoryController{
     return _categoryRepository.streamingData();
   }
 
-  category({required category,required image,required id}){
-_categoryRepository.category(category, image,id);
+  category({required category,required image,required id,required search,}){
+_categoryRepository.category(category, image,id,search,);
   }
 
   categoryUpdate(CategoryModel categoryModel){

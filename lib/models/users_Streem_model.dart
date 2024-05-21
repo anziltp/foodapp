@@ -5,6 +5,7 @@ class UserStreemModel{
   String image;
   String id;
   bool status;
+  List search;
 
   UserStreemModel({
     required this.name,
@@ -13,6 +14,7 @@ class UserStreemModel{
     required this.image,
     required this.id,
     required this.status,
+    required this.search,
 
   });
   Map<String,dynamic> toMap() {
@@ -23,16 +25,19 @@ class UserStreemModel{
       "image":image,
       "id":id,
       "status":status,
+      "search":search,
 
     };
   }
   factory UserStreemModel.fromMap(Map<String,dynamic>map){
-    return UserStreemModel(name: map['name']??'',
+    return UserStreemModel(
+      name: map['name']??'',
       email: map['email']??'',
       password: map['password']??'',
       image: map['image']??'',
       id: map['id']??'',
       status: map['status']??'',
+      search: map['search']??[],
 
     );
   }
@@ -43,6 +48,7 @@ class UserStreemModel{
     String? image,
     String? id,
      bool? status,
+    List? search
 
   }){
     return UserStreemModel(
@@ -51,7 +57,8 @@ class UserStreemModel{
       password: password??this.password,
       image: image??this.image,
       id: id??this.id,
-      status:status??this.status
+      status:status??this.status,
+        search:search??this.search
 
     );
   }

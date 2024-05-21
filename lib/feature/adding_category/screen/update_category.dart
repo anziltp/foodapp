@@ -62,7 +62,8 @@ class _UpdateCategoryState extends ConsumerState<UpdateCategory> {
     CategoryModel update = CategoryModel(
         category: category.text,
         image: coverImage.toString(),
-        id:widget.model.id);
+        id:widget.model.id,
+        search: [],);
     ref.read(categoryControllerProvider).categoryUpdate(update);
     showSnackBar(context, "Updating.....");
   }

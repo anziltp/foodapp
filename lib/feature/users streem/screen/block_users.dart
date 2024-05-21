@@ -30,7 +30,38 @@ class _BlockUsersState extends ConsumerState<BlockUsers> {
       body: Padding(
         padding: EdgeInsets.all(w * 0.01),
         child: Column(
+
           children: [
+            SizedBox(
+              height: w * 0.03,
+              width: w * 0.4,
+              //color: Colors.red,
+              child: TextFormField(
+                // controller: search,
+                style: TextStyle(color: ColorConst.black),
+                decoration: InputDecoration(
+                  label: Text("Search ......"),
+                  suffixIcon: Padding(
+                    padding:  EdgeInsets.only(right: w*0.01),
+                    child: Icon(CupertinoIcons.search,color: Colors.grey,),
+                  ),
+
+                  labelStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConst.black),
+                      borderRadius: BorderRadius.circular(w * 0.04)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color:ColorConst.black),
+                      borderRadius: BorderRadius.circular(w * 0.04)),
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: h*0.04,),
             Expanded(
                 child: ref.watch(blockuserStream).when(
                   data: (data) {

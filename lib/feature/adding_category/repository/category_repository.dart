@@ -19,8 +19,8 @@ CollectionReference get _Category=>_firestore.collection("Categories");
     return _Category.snapshots().map((event) => event.docs.map((e) => CategoryModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
 
-category(category,image,id){
-CategoryModel categoryModel=CategoryModel(category: category, image: image, id: id);
+category(category,image,id,search,){
+CategoryModel categoryModel=CategoryModel(category: category, image: image, id: id, search: search, );
 _Category.add(categoryModel.toMap()).then((value){
   value.update(categoryModel.copyWith(id: value.id).toMap());
 });

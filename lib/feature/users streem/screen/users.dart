@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/feature/users%20streem/condroller/streem_condroller.dart';
 import 'package:foodapp/feature/users%20streem/screen/block_users.dart';
@@ -21,7 +22,7 @@ class _UsersPageState extends ConsumerState<UsersPage> {
     ref.read(userDataRepository).deleteUser(id);
     showSnackBar(context, "Deleting.....");
   }
-
+// TextEditingController search=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,14 +34,43 @@ class _UsersPageState extends ConsumerState<UsersPage> {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Container(
+                  height: w * 0.03,
+                  width: w * 0.4,
+                  //color: Colors.red,
+                  child: TextFormField(
+                    // controller: search,
+                    style: TextStyle(color: ColorConst.black),
+                    decoration: InputDecoration(
+                      label: Text("Search ......"),
+suffixIcon: Padding(
+  padding:  EdgeInsets.only(right: w*0.01),
+  child: Icon(CupertinoIcons.search,color: Colors.grey,),
+),
+
+                      labelStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: ColorConst.black),
+                          borderRadius: BorderRadius.circular(w * 0.04)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color:ColorConst.black),
+                          borderRadius: BorderRadius.circular(w * 0.04)),
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
                 InkWell(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => BlockUsers(),));
                   },
                   child: Container(
-                    height: h * 0.05,
+                    height: h * 0.06,
                     width: w * 0.1,
                     decoration: BoxDecoration(
                       borderRadius:
@@ -387,9 +417,15 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                           },
                         );
                       },
-                      error: (error, stackTrace) => const Text("error"),
-                      loading: () => const CircularProgressIndicator(),
-                    ))
+                  error: (error, stackTrace) => Column(
+                    children: [
+                      Text(error.toString()),
+                      Text('==============================='),
+                      Text(stackTrace.toString()),
+                    ],
+                  ),
+                  loading: () => const CircularProgressIndicator(),
+                )),
           ],
         ),
       ),

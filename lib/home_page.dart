@@ -1,6 +1,6 @@
-
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp/constans/image_const.dart';
@@ -19,6 +19,8 @@ import 'constans/color_const.dart';
 import 'constans/image_const.dart';
 import 'main.dart';
 
+String? file;
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -33,7 +35,6 @@ TextEditingController email = TextEditingController();
 class _HomePageState extends State<HomePage> {
   /// Views to display
   List<Widget> views = const [
-
     UsersPage(),
     Bookings(),
     AddItems(),
@@ -42,8 +43,17 @@ class _HomePageState extends State<HomePage> {
     AdminPage()
   ];
 
+  List<Widget> nonAdminViews = const [
+    UsersPage(),
+    Bookings(),
+    AddItems(),
+    ProductHome(),
+    BannerPage(),
+  ];
+
   /// The currently selected index of the bar
   int selectedIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,68 +69,102 @@ class _HomePageState extends State<HomePage> {
       body: Row(
         children: [
           /// Pretty similar to the BottomNavigationBar!
-          SideNavigationBar(
+          currentRole == "Super Admin" ? SideNavigationBar(
             selectedIndex: selectedIndex,
             theme: SideNavigationBarTheme(
-
                 itemTheme: SideNavigationBarItemTheme(
-                  unselectedItemColor: ColorConst.black,
+                    unselectedItemColor: ColorConst.black,
                     selectedItemColor: ColorConst.primerycolor),
-
                 togglerTheme: SideNavigationBarTogglerTheme(
                     expandIconColor: ColorConst.primerycolor),
                 dividerTheme: SideNavigationBarDividerTheme.standard()),
-
-            footer: SideNavigationBarFooter(label: InkWell(
+            footer: SideNavigationBarFooter(
+                label: InkWell(
               onTap: () {
-                showCupertinoModalPopup(context: context, builder: (context) {
-                  return CupertinoAlertDialog(
-                    title: const Text("Are you sure\nYou want to Exit"),
-                    actions: [
-                      Column(
-                        children: [
-                          CupertinoDialogAction(child: Text("yes",style: TextStyle(fontSize: w*0.01,fontWeight: FontWeight.w800,color: Colors.red),),
-                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => const CreatePage(),), (route) => false);
-                           }, ),
-                          const Divider(),
-                          CupertinoDialogAction(child: Text("cancel",style: TextStyle(fontSize: w*0.01,fontWeight: FontWeight.w800),)
-                            ,onPressed: () {
-                              Navigator.pop(context);
-                            },),
-
-                        ],
-                      )
-
-
-
-
-                    ],
-                  );
-                },);
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: const Text("Are you sure\nYou want to Exit"),
+                      actions: [
+                        Column(
+                          children: [
+                            CupertinoDialogAction(
+                              child: Text(
+                                "yes",
+                                style: TextStyle(
+                                    fontSize: w * 0.01,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.red),
+                              ),
+                              onPressed: () {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => const CreatePage(),
+                                    ),
+                                    (route) => false);
+                              },
+                            ),
+                            const Divider(),
+                            CupertinoDialogAction(
+                              child: Text(
+                                "cancel",
+                                style: TextStyle(
+                                    fontSize: w * 0.01,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  },
+                );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Exit",style: TextStyle(fontWeight: FontWeight.w700,fontSize: w*0.015),),
-                  SizedBox(width: w*0.01,),
+                  Text(
+                    "Exit",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700, fontSize: w * 0.015),
+                  ),
+                  SizedBox(
+                    width: w * 0.01,
+                  ),
                   const Icon(Icons.exit_to_app)
                 ],
               ),
             )),
-            header: SideNavigationBarHeader(image: Image.asset(ImageConst.splashscreen,width: w*0.07,), title:  Text("Yum Yard",style: TextStyle(fontWeight: FontWeight.w700,fontSize: w*0.013,color: ColorConst.primerycolor),), subtitle: Padding(
-              padding:  EdgeInsets.only(left:w*0.01),
-              child: const Text("admin",style: TextStyle(fontWeight: FontWeight.w700,color: Colors.black),),
-            ),
+            header: SideNavigationBarHeader(
+              image: Image.asset(
+                ImageConst.splashscreen,
+                width: w * 0.07,
+              ),
+              title: Text(
+                "Yum Yard",
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: w * 0.013,
+                    color: ColorConst.primerycolor),
+              ),
+              subtitle: Padding(
+                padding: EdgeInsets.only(left: w * 0.001,top: w*0.001),
+                child: const Text(
+                  "Super Admin",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700, color: Colors.black),
+                ),
+              ),
             ),
             items: const [
-
-
               SideNavigationBarItem(
                 icon: Icons.person,
                 label: 'users',
-
-
               ),
               SideNavigationBarItem(
                 icon: Icons.production_quantity_limits_outlined,
@@ -142,7 +186,125 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.person_3,
                 label: 'Admin',
               ),
-
+            ],
+            onTap: (index) {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
+          ) : SideNavigationBar(
+            selectedIndex: selectedIndex,
+            theme: SideNavigationBarTheme(
+                itemTheme: SideNavigationBarItemTheme(
+                    unselectedItemColor: ColorConst.black,
+                    selectedItemColor: ColorConst.primerycolor),
+                togglerTheme: SideNavigationBarTogglerTheme(
+                    expandIconColor: ColorConst.primerycolor),
+                dividerTheme: SideNavigationBarDividerTheme.standard()),
+            footer: SideNavigationBarFooter(
+                label: InkWell(
+                  onTap: () {
+                    showCupertinoModalPopup(
+                      context: context,
+                      builder: (context) {
+                        return CupertinoAlertDialog(
+                          title: const Text("Are you sure\nYou want to Exit"),
+                          actions: [
+                            Column(
+                              children: [
+                                CupertinoDialogAction(
+                                  child: Text(
+                                    "yes",
+                                    style: TextStyle(
+                                        fontSize: w * 0.01,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.red),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => const CreatePage(),
+                                        ),
+                                            (route) => false);
+                                  },
+                                ),
+                                const Divider(),
+                                CupertinoDialogAction(
+                                  child: Text(
+                                    "cancel",
+                                    style: TextStyle(
+                                        fontSize: w * 0.01,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Exit",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: w * 0.015),
+                      ),
+                      SizedBox(
+                        width: w * 0.01,
+                      ),
+                      const Icon(Icons.exit_to_app)
+                    ],
+                  ),
+                )),
+            header: SideNavigationBarHeader(
+              image: Image.asset(
+                ImageConst.splashscreen,
+                width: w * 0.07,
+              ),
+              title: Text(
+                "Yum Yard",
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: w * 0.013,
+                    color: ColorConst.primerycolor),
+              ),
+              subtitle: Padding(
+                padding: EdgeInsets.only(left: w * 0.01),
+                child: const Text(
+                  "admin",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700, color: Colors.black),
+                ),
+              ),
+            ),
+            items: const [
+              SideNavigationBarItem(
+                icon: Icons.person,
+                label: 'users',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.production_quantity_limits_outlined,
+                label: 'Bookings',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.import_export,
+                label: 'Categories',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.production_quantity_limits,
+                label: 'Items',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.photo_library_outlined,
+                label: 'Banner',
+              ),
             ],
             onTap: (index) {
               setState(() {
@@ -153,7 +315,7 @@ class _HomePageState extends State<HomePage> {
 
           /// Make it take the rest of the available width
           Expanded(
-            child: views.elementAt(selectedIndex),
+            child: currentRole=="Super Admin" ? views.elementAt(selectedIndex) : nonAdminViews.elementAt(selectedIndex),
           )
         ],
       ),

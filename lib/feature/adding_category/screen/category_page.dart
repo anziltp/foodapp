@@ -64,10 +64,11 @@ print(BoxFit.cover);
 
 
   addCategory() {
-    ref.read(categoryControllerProvider).category(category: category.text, image: coverImage.toString(),id: "");
+    ref.read(categoryControllerProvider).category(category: category.text, image: coverImage.toString(),id: "", search: []);
     showSnackBar(context, "Uploading...");
     coverImage = "";
     category.clear();
+
   }
   deleteCategory(String id){
     ref.read(categoryControllerProvider).deleteCategories(id);

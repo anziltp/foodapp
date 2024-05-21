@@ -17,7 +17,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../../constans/color_const.dart';
 import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
-import '../../../models/user_model.dart';
 import '../../users streem/condroller/streem_condroller.dart';
 import '../controller/item_controller.dart';
 import '../repository/items_repository.dart';
@@ -125,6 +124,7 @@ addingItemsss(){
         Fav: [],
       categoryId: widget.category.id,
       CategoryName: categoryController.text,
+      search: [],
 
     );
     print("id-----------------------------------$categoryId");
@@ -143,16 +143,16 @@ addingItemsss(){
     }
 
 
-    Usermodel userModelData = Usermodel(
-        name: nameController.text,
-        price: rateController.text, favourite: []
-        // place: placeController.text,
-        // rate: double.tryParse(rateController.text),
-        // image: coverImage.toString(),
-        // image2: imageUrlList,
-        // description: descriptionController.text,
-        // category: chooseitem
-    );
+    // Usermodel userModelData = Usermodel(
+    //     name: nameController.text,
+    //     price: rateController.text, favourite: []
+    //     // place: placeController.text,
+    //     // rate: double.tryParse(rateController.text),
+    //     // image: coverImage.toString(),
+    //     // image2: imageUrlList,
+    //     // description: descriptionController.text,
+    //     // category: chooseitem
+    // );
 
     // FirebaseFirestore.instance.collection("Hotel").doc(nameController.text).set(userModelData.toMap()
 

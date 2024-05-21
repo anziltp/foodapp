@@ -68,7 +68,8 @@ class _PoppinsPageState extends ConsumerState<ToppingsPage> {
        category: category.text,
         image: coverImage.toString(),
         id: "",
-        categoryId: widget.category.id
+        categoryId: widget.category.id,
+        search: []
 
     );
 

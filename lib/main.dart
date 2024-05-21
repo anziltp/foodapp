@@ -15,6 +15,8 @@ import 'firebase_options.dart';
 
 var w;
 var h;
+String? currentRole;
+
 Future<void> main()  async {
   WidgetsFlutterBinding.ensureInitialized(
 
