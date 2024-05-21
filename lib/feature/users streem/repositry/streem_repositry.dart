@@ -16,6 +16,7 @@ class UserRepository{
   usersData(){
     return _userdata.where("status",isEqualTo: false).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
+
   blockuserview(){
     return _userdata.where("status",isEqualTo: true).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }

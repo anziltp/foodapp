@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/feature/users%20streem/condroller/streem_condroller.dart';
 import 'package:foodapp/feature/users%20streem/screen/block_users.dart';
 
+import '../../../constans/setsearchparam.dart';
 import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
 import '../repositry/streem_repositry.dart';
@@ -33,6 +35,23 @@ class _UsersPageState extends ConsumerState<UsersPage> {
         padding: EdgeInsets.all(w * 0.01),
         child: Column(
           children: [
+            // ElevatedButton(onPressed: () async {
+            //
+            //   var data=await FirebaseFirestore.instance.collection("Users").get();
+            //   for (var docs in data.docs){
+            //
+            //     FirebaseFirestore.instance.collection("Users").doc(docs["id"]).update(
+            //         {
+            //           "search":setSearchParam(
+            //             docs["name"]+" "+
+            //             docs["email"]
+            //
+            //           )
+            //
+            //         });
+            //   }
+            //
+            // }, child: Text("add")),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
