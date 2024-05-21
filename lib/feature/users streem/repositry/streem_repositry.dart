@@ -10,11 +10,21 @@ class UserRepository{
 
   final FirebaseFirestore _firestore;
   UserRepository({required FirebaseFirestore firestore}):_firestore=firestore;
-  CollectionReference get _userdata=>_firestore.collection("Users");
+  CollectionReference<Map<String,dynamic>> get _userdata=>_firestore.collection("Users");
 
 
   usersData(){
     return _userdata.where("status",isEqualTo: false).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data() as Map<String,dynamic>)).toList());
+  }
+
+  Stream <List<UserStreemModel>>searchUser(String search){
+    if(search.isEmpty){
+      return _userdata.where("status",isEqualTo: false).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data())).toList());
+    }
+    else{
+      return _userdata.where("search",arrayContains: search.toUpperCase()).where("status",isEqualTo: false).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data())).toList());
+    }
+
   }
 
   blockuserview(){

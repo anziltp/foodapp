@@ -385,7 +385,7 @@ class _BlockUsersState extends ConsumerState<BlockUsers> {
                        Text(stackTrace.toString()),
                     ],
                   ),
-                  loading: () => const CircularProgressIndicator(),
+                  loading: () =>  Center(child: CircularProgressIndicator()),
                 )),
         ]
       ),

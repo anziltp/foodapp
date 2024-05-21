@@ -24,7 +24,9 @@ class _UsersPageState extends ConsumerState<UsersPage> {
     ref.read(userDataRepository).deleteUser(id);
     showSnackBar(context, "Deleting.....");
   }
-// TextEditingController search=TextEditingController();
+
+TextEditingController searchController=TextEditingController();
+  final search = StateProvider((ref) => "");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,22 +62,29 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                   width: w * 0.4,
                   //color: Colors.red,
                   child: TextFormField(
-                    // controller: search,
+                    controller: searchController,
                     style: TextStyle(color: ColorConst.black),
+                    onChanged: (value) {
+                      ref
+                          .read(search.notifier)
+                          .update((state) => value.toString().toUpperCase());
+                    },
                     decoration: InputDecoration(
                       label: Text("Search ......"),
-suffixIcon: Padding(
-  padding:  EdgeInsets.only(right: w*0.01),
-  child: Icon(CupertinoIcons.search,color: Colors.grey,),
-),
-
+                      suffixIcon: Padding(
+                        padding: EdgeInsets.only(right: w * 0.01),
+                        child: Icon(
+                          CupertinoIcons.search,
+                          color: Colors.grey,
+                        ),
+                      ),
                       labelStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(),
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: ColorConst.black),
                           borderRadius: BorderRadius.circular(w * 0.04)),
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color:ColorConst.black),
+                          borderSide: BorderSide(color: ColorConst.black),
                           borderRadius: BorderRadius.circular(w * 0.04)),
                       hintStyle: TextStyle(
                         color: Colors.white,
@@ -86,46 +95,41 @@ suffixIcon: Padding(
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => BlockUsers(),));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlockUsers(),
+                        ));
                   },
                   child: Container(
                     height: h * 0.06,
                     width: w * 0.1,
                     decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(
-                          w * 0.04),
+                      borderRadius: BorderRadius.circular(w * 0.04),
                       gradient: const LinearGradient(
                           begin: Alignment.centerLeft,
                           end: Alignment.bottomRight,
-                          stops: [
-                            0.3,
-                            0.7
-                          ],
-                          colors: [
-                            Color(0xffF9881F),
-                            Color(0xffFF774C)
-                          ]),
+                          stops: [0.3, 0.7],
+                          colors: [Color(0xffF9881F), Color(0xffFF774C)]),
                     ),
                     child: const Center(
                         child: Text(
-                          "Blocked users",
-                          style: TextStyle(
-                              fontWeight:
-                              FontWeight.w800),
-                        )),
+                      "Blocked users",
+                      style: TextStyle(fontWeight: FontWeight.w800),
+                    )),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: h*0.04,),
+            SizedBox(
+              height: h * 0.04,
+            ),
             Expanded(
-                child: ref.watch(userStream).when(
+                child: ref.watch(streamUsers(ref.watch(search))).when(
                       data: (data) {
                         // print("---------------------------");
                         // print(data);
                         return GridView.builder(
-                          
                           itemCount: data.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -436,15 +440,15 @@ suffixIcon: Padding(
                           },
                         );
                       },
-                  error: (error, stackTrace) => Column(
-                    children: [
-                      Text(error.toString()),
-                      Text('==============================='),
-                      Text(stackTrace.toString()),
-                    ],
-                  ),
-                  loading: () => const CircularProgressIndicator(),
-                )),
+                      error: (error, stackTrace) => Column(
+                        children: [
+                          Text(error.toString()),
+                          Text('==============================='),
+                          Text(stackTrace.toString()),
+                        ],
+                      ),
+                      loading: () =>  Center(child: CircularProgressIndicator()),
+                    )),
           ],
         ),
       ),
