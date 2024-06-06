@@ -20,7 +20,8 @@ class _BlockUsersState extends ConsumerState<BlockUsers> {
     ref.read(userDataRepository).deleteUser(id);
     showSnackBar(context, "Deleting.....");
   }
-
+  final search = StateProvider((ref) => "");
+TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +38,13 @@ class _BlockUsersState extends ConsumerState<BlockUsers> {
               width: w * 0.4,
               //color: Colors.red,
               child: TextFormField(
-                // controller: search,
+                controller: searchController,
                 style: TextStyle(color: ColorConst.black),
+                onChanged: (value) {
+                  ref
+                      .read(search.notifier)
+                      .update((state) => value.toString().toUpperCase());
+                },
                 decoration: InputDecoration(
                   label: Text("Search ......"),
                   suffixIcon: Padding(
@@ -63,7 +69,7 @@ class _BlockUsersState extends ConsumerState<BlockUsers> {
             ),
             SizedBox(height: h*0.04,),
             Expanded(
-                child: ref.watch(blockuserStream).when(
+                child:ref.watch(streamBlockUsers(ref.watch(search))).when(
                   data: (data) {
                     // print("---------------------------");
                     // print(data);

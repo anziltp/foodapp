@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:foodapp/feature/adding_banner/screen/banner_page.dart';
 
 
-import 'package:foodapp/home_page.dart';
+import 'package:foodapp/home/home_page.dart';
 import 'package:foodapp/feature/admin_adding/screen/admin_page.dart';
 import 'package:foodapp/splash/screen/Splash_Screen.dart';
 
@@ -16,6 +16,7 @@ import 'firebase_options.dart';
 var w;
 var h;
 String? currentRole;
+
 
 Future<void> main()  async {
   WidgetsFlutterBinding.ensureInitialized(

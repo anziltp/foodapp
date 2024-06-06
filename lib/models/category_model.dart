@@ -28,6 +28,7 @@ class CategoryModel {
         id: id ?? this.id,
     search: search?? this.search,
 
+
     );
   }
 }

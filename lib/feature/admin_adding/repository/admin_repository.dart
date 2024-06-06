@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foodapp/home_page.dart';
+import 'package:foodapp/home/home_page.dart';
 import 'package:foodapp/models/admin_model.dart';
 
 import '../../../core/Provider/provider.dart';

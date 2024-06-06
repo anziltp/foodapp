@@ -13,9 +13,6 @@ class UserRepository{
   CollectionReference<Map<String,dynamic>> get _userdata=>_firestore.collection("Users");
 
 
-  usersData(){
-    return _userdata.where("status",isEqualTo: false).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data() as Map<String,dynamic>)).toList());
-  }
 
   Stream <List<UserStreemModel>>searchUser(String search){
     if(search.isEmpty){
@@ -26,10 +23,18 @@ class UserRepository{
     }
 
   }
+  Stream <List<UserStreemModel>>searchBlockUser(String search){
+    if(search.isEmpty){
+      return _userdata.where("status",isEqualTo: true).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data())).toList());
+    }
+    else{
+      return _userdata.where("search",arrayContains: search.toUpperCase()).where("status",isEqualTo: true).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data())).toList());
+    }
 
-  blockuserview(){
-    return _userdata.where("status",isEqualTo: true).snapshots().map((event) => event.docs.map((e) => UserStreemModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
+
+
+
 deleteUser(String id){
   _userdata.doc(id).delete();
 }

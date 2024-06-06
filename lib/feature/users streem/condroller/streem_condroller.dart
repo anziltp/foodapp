@@ -7,24 +7,22 @@ import '../../../models/users_Streem_model.dart';
 
 
 final userControllerRepository=Provider((ref) => UserController(repository: ref.watch(userDataRepository)));
-final userStream=StreamProvider((ref) => ref.watch(userControllerRepository).userDetails());
 
 final streamUsers=StreamProvider.autoDispose.family((ref ,String search)=>ref.watch(userControllerRepository).searchUser(search: search));
+final streamBlockUsers=StreamProvider.autoDispose.family((ref ,String search)=>ref.watch(userControllerRepository).searchBlockUser(search: search));
 
- final blockuserStream=StreamProvider((ref) => ref.watch(userControllerRepository).blockuserDetails());
 class UserController{
   final UserRepository _repository;
   UserController({required UserRepository repository}):_repository=repository;
-  Stream userDetails(){
-    return _repository.usersData();
-  }
+
   Stream<List<UserStreemModel>>searchUser({required String search}){
     return _repository.searchUser(search);
   }
-  
-  Stream blockuserDetails(){
-    return _repository.blockuserview();
+  Stream<List<UserStreemModel>>searchBlockUser({required String search}){
+    return _repository.searchBlockUser(search);
   }
+  
+
   deleteUsers(String id){
     _repository.deleteUser(id);
   }

@@ -6,18 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:foodapp/constans/image_const.dart';
 import 'package:foodapp/feature/adding_category/screen/category_page.dart';
 import 'package:foodapp/constans/color_const.dart';
+import 'package:foodapp/feature/bookings/screen/bookings_users.dart';
 import 'package:foodapp/login%20part/create_account.dart';
 import 'package:foodapp/feature/admin_adding/screen/admin_page.dart';
 import 'package:foodapp/feature/adding_banner/screen/banner_page.dart';
-import 'package:foodapp/sidemenu%20part/booking.dart';
+
 import 'package:foodapp/sidemenu%20part/dashboard.dart';
 import 'package:foodapp/sidemenu%20part/product%20_Adding/product_Home.dart';
 import 'package:foodapp/feature/users%20streem/screen/users.dart';
 import 'package:side_navigation/side_navigation.dart';
 
-import 'constans/color_const.dart';
-import 'constans/image_const.dart';
-import 'main.dart';
+import '../constans/color_const.dart';
+import '../constans/image_const.dart';
+import '../main.dart';
 
 String? file;
 
@@ -28,15 +29,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-TextEditingController name = TextEditingController();
-TextEditingController password = TextEditingController();
-TextEditingController email = TextEditingController();
+
 
 class _HomePageState extends State<HomePage> {
   /// Views to display
   List<Widget> views = const [
     UsersPage(),
-    Bookings(),
+    BookingUser(),
     AddItems(),
     ProductHome(),
     BannerPage(),
@@ -45,7 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> nonAdminViews = const [
     UsersPage(),
-    Bookings(),
+    BookingUser(),
     AddItems(),
     ProductHome(),
     BannerPage(),
