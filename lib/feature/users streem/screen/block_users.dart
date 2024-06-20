@@ -88,19 +88,11 @@ TextEditingController searchController=TextEditingController();
                           height: w * 0.08,
                           width: w * 0.5,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.cyan),
+                            border: Border.all(color: Colors.black),
                             borderRadius: BorderRadius.circular(w * 0.04),
-                            gradient: const LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.bottomRight,
-                                stops: [
-                                  0.3,
-                                  0.7
-                                ],
-                                colors: [
-                                  Color(0xffF9881F),
-                                  Color(0xffFF774C)
-                                ]),
+                            gradient:  LinearGradient(
+
+                                colors: [ColorConst.Grey,ColorConst.Grey2]),
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(w * 0.01),

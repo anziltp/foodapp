@@ -187,7 +187,7 @@ addingItemsss(){
                 height: w * 0.10,
                 width: w * 0.10,
                 decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: Colors.grey,
                     borderRadius: BorderRadius.circular(w * 0.03),
                     image:coverPhoto == true? DecorationImage(image:   NetworkImage(coverImage.toString()),fit: BoxFit.cover)  :DecorationImage(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZUX7zo1yYFaBeOYIcOfcgwnULvpM7YqzXxA&usqp=CAU"),fit: BoxFit.cover)
                 ),
@@ -205,14 +205,9 @@ addingItemsss(){
                 height: w * 0.04,
                 width: w * 0.09,
                 decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0.3,0.7],
-                        colors:[
-                          Color(0xffF9881F),
-                          Color(0xffFF774C)
-                        ]),
+                    gradient:  LinearGradient(
+
+                        colors: [ColorConst.Grey,ColorConst.Grey2]),
                     borderRadius: BorderRadius.circular(w * 0.01)),
                 child: Center(
                     child: Text("Cover image",
@@ -386,14 +381,9 @@ addingItemsss(){
                     height: w * 0.04,
                     width: w * 0.2,
                     decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [0.3,0.7],
-                            colors:[
-                              Color(0xffF9881F),
-                              Color(0xffFF774C)
-                            ]),
+                        gradient:  LinearGradient(
+
+                            colors: [ColorConst.Grey,ColorConst.Grey2]),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.green.withOpacity(0.20),
@@ -480,17 +470,9 @@ addingItemsss(){
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.cyan),
                             borderRadius: BorderRadius.circular(w * 0.04),
-                            gradient: const LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.bottomRight,
-                                stops: [
-                                  0.3,
-                                  0.7
-                                ],
-                                colors: [
-                                  Color(0xffF9881F),
-                                  Color(0xffFF774C)
-                                ]),
+                            gradient:  LinearGradient(
+
+                                colors: [ColorConst.Grey,ColorConst.Grey2]),
                           ),
                           child:Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -509,17 +491,9 @@ addingItemsss(){
                               Container(
                                 width: w*0.15,
                                 decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.bottomRight,
-                                      stops: [
-                                        0.3,
-                                        0.7
-                                      ],
-                                      colors: [
-                                        Color(0xffF9881F),
-                                        Color(0xffFF774C)
-                                      ]),
+                                  gradient:  LinearGradient(
+
+                                      colors: [ColorConst.Grey,ColorConst.Grey2]),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,

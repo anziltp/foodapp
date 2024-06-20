@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../constans/color_const.dart';
-import '../../feature/adding_category/controller/category_controller.dart';
-import '../../main.dart';
-import '../../feature/adding_products/screen/add_products.dart';
+import '../../../constans/color_const.dart';
+import '../../adding_category/controller/category_controller.dart';
+import '../../../main.dart';
+import 'add_products.dart';
 
 class ProductHome extends ConsumerStatefulWidget {
   const ProductHome({super.key});
@@ -50,11 +50,9 @@ class _ProductHomeState extends ConsumerState<ProductHome> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(w*0.01),
                       border: Border.all(),
-                      gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          stops: [0.3, 0.7],
-                          colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                      gradient:  LinearGradient(
+
+                          colors: [ColorConst.Grey,ColorConst.Grey2]),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -115,7 +113,7 @@ class _ProductHomeState extends ConsumerState<ProductHome> {
                         color: ColorConst.white,
                         borderRadius: BorderRadius.circular(w * 0.06),
                         border: Border.all(
-                            color: ColorConst.primerycolor, width: w * 0.003)),
+                            color: ColorConst.Grey, width: w * 0.003)),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/feature/adding_products/controller/item_controller.dart';
 import 'package:foodapp/models/items_model.dart';
 
+import '../../../constans/color_const.dart';
 import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
 import '../../../models/category_model.dart';
@@ -144,7 +145,7 @@ class _UpdateItemsState extends ConsumerState<UpdateItems> {
           height: w * 0.10,
           width: w * 0.10,
           decoration: BoxDecoration(
-              color: Colors.orange,
+              color: Colors.grey,
               borderRadius: BorderRadius.circular(w * 0.03),
               image:coverPhoto == true? DecorationImage(image:   NetworkImage(coverImage.toString()),fit: BoxFit.cover)  :DecorationImage(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZUX7zo1yYFaBeOYIcOfcgwnULvpM7YqzXxA&usqp=CAU"),fit: BoxFit.cover)
           ),
@@ -162,14 +163,9 @@ class _UpdateItemsState extends ConsumerState<UpdateItems> {
           height: w * 0.04,
           width: w * 0.09,
           decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: [0.3,0.7],
-                  colors:[
-                    Color(0xffF9881F),
-                    Color(0xffFF774C)
-                  ]),
+              gradient:  LinearGradient(
+
+                  colors: [ColorConst.Grey,ColorConst.Grey2]),
               borderRadius: BorderRadius.circular(w * 0.01)),
           child: Center(
               child: Text("Cover image",
@@ -329,14 +325,9 @@ class _UpdateItemsState extends ConsumerState<UpdateItems> {
               height: w * 0.04,
               width: w * 0.2,
               decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0.3,0.7],
-                      colors:[
-                        Color(0xffF9881F),
-                        Color(0xffFF774C)
-                      ]),
+                  gradient:  LinearGradient(
+
+                      colors: [ColorConst.Grey,ColorConst.Grey2]),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.green.withOpacity(0.20),

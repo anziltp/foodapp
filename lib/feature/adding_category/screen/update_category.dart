@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/constans/snack_bar_page.dart';
 import 'package:foodapp/models/category_model.dart';
 
+import '../../../constans/color_const.dart';
 import '../../../main.dart';
 import '../controller/category_controller.dart';
 
@@ -86,11 +87,9 @@ class _UpdateCategoryState extends ConsumerState<UpdateCategory> {
             width: w * 0.15,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(w * 0.03),
-              gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: [0.3, 0.7],
-                  colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+              gradient:  LinearGradient(
+
+                  colors: [ColorConst.Grey,ColorConst.Grey2]),
             ),
             child: Image.network(coverImage.toString()),
           ),
@@ -106,11 +105,9 @@ class _UpdateCategoryState extends ConsumerState<UpdateCategory> {
                 height: h * 0.05,
                 width: w * 0.1,
                 decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0.3, 0.7],
-                        colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                    gradient:  LinearGradient(
+
+                        colors: [ColorConst.Grey,ColorConst.Grey2]),
                     borderRadius: BorderRadius.circular(w * 0.06)),
                 child: Center(
                     child: Text(
@@ -169,11 +166,9 @@ class _UpdateCategoryState extends ConsumerState<UpdateCategory> {
                 height: h * 0.06,
                 width: w * 0.12,
                 decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0.3, 0.7],
-                        colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                    gradient:  LinearGradient(
+
+                        colors: [ColorConst.Grey,ColorConst.Grey2]),
                     borderRadius: BorderRadius.circular(w * 0.06)),
                 child: Center(
                     child: Text(

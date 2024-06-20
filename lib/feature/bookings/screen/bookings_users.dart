@@ -1,15 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/feature/bookings/screen/bookings.dart';
 import 'package:foodapp/feature/users%20streem/condroller/streem_condroller.dart';
-import 'package:foodapp/feature/users%20streem/screen/block_users.dart';
-
-import '../../../constans/setsearchparam.dart';
-import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
 
 class BookingUser extends ConsumerStatefulWidget {
@@ -72,7 +66,7 @@ class _UsersPageState extends ConsumerState<BookingUser> {
                           height: w * 0.08,
                           width: w * 0.5,
                           decoration: BoxDecoration(
-                            border: Border.all(color: ColorConst.seondarycolor),
+                            border: Border.all(color: ColorConst.Grey),
                             borderRadius: BorderRadius.circular(w * 0.04),
                             color: Colors.white60
                           ),
@@ -87,7 +81,7 @@ class _UsersPageState extends ConsumerState<BookingUser> {
                                 width: w*0.09,
                                  decoration: BoxDecoration(
                                    borderRadius: BorderRadius.circular(w*0.02),
-                                   color: ColorConst.primerycolor
+                                   color: ColorConst.Grey2
                                  ),
                                 child: Image(image: NetworkImage(data[index].image,),fit: BoxFit.fill,),
                                 ),
@@ -115,7 +109,7 @@ class _UsersPageState extends ConsumerState<BookingUser> {
                                               borderRadius:
                                               BorderRadius.circular(
                                                   w * 0.04),
-                                              color: ColorConst.primerycolor
+                                              color: ColorConst.Grey
                                             ),
                                             child: const Center(
                                                 child: Text(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodapp/feature/adding_banner/condroller/banner_controller.dart';
 
+import '../../../constans/color_const.dart';
 import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
 
@@ -76,11 +77,9 @@ class _BannerPageState extends ConsumerState<BannerPage> {
               width: w * 0.15,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(w * 0.03),
-                gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.3, 0.7],
-                    colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                gradient:  LinearGradient(
+
+                    colors: [ColorConst.Grey,ColorConst.Grey2]),
               ),
               child: value==true?Image.network(coverImage.toString(),fit: BoxFit.fill,scale: 2,): Icon(Icons.image,size: w*0.05,),
             ),
@@ -95,11 +94,9 @@ class _BannerPageState extends ConsumerState<BannerPage> {
                   height: h * 0.05,
                   width: w * 0.06,
                   decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          stops: [0.3, 0.7],
-                          colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                      gradient:  LinearGradient(
+
+                          colors: [ColorConst.Grey,ColorConst.Grey2]),
                       borderRadius: BorderRadius.circular(w * 0.06)),
                   child: Center(
                       child: Text(
@@ -121,11 +118,9 @@ class _BannerPageState extends ConsumerState<BannerPage> {
                 height: h * 0.05,
                 width: w * 0.1,
                 decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0.3, 0.7],
-                        colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                    gradient:  LinearGradient(
+
+                        colors: [ColorConst.Grey,ColorConst.Grey2]),
                     borderRadius: BorderRadius.circular(w * 0.06)),
                 child: Center(
                     child: Text(
@@ -156,11 +151,9 @@ class _BannerPageState extends ConsumerState<BannerPage> {
                             width: w*0.25,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(w*0.01),
-                                gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    stops: [0.3, 0.7],
-                                    colors: [Color(0xffF9881F), Color(0xffFF774C)]),
+                                gradient:  LinearGradient(
+
+                                    colors: [ColorConst.Grey,ColorConst.Grey2]),
                                 border: Border.all()
                             ),
                             child: Row(
@@ -192,7 +185,7 @@ class _BannerPageState extends ConsumerState<BannerPage> {
                                         borderRadius: BorderRadius.circular(w*0.03),
                                         color: Colors.white
                                     ),
-                                    child: const Icon(Icons.delete_outlined,color: Colors.red,),
+                                    child: const Icon(Icons.delete_outlined,color: Colors.black,),
                                   ),
                                 ),
                               ],

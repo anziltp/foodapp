@@ -12,7 +12,7 @@ import 'package:foodapp/feature/admin_adding/screen/admin_page.dart';
 import 'package:foodapp/feature/adding_banner/screen/banner_page.dart';
 
 import 'package:foodapp/sidemenu%20part/dashboard.dart';
-import 'package:foodapp/sidemenu%20part/product%20_Adding/product_Home.dart';
+import 'package:foodapp/feature/adding_products/screen/product_Home.dart';
 import 'package:foodapp/feature/users%20streem/screen/users.dart';
 import 'package:side_navigation/side_navigation.dart';
 
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       /// You can use an AppBar if you want to
       appBar: AppBar(
-        backgroundColor: ColorConst.seondarycolor,
+        backgroundColor: ColorConst.Grey,
         elevation: 0,
         title: const Center(child: Text('Food App')),
       ),
@@ -73,9 +73,9 @@ class _HomePageState extends State<HomePage> {
             theme: SideNavigationBarTheme(
                 itemTheme: SideNavigationBarItemTheme(
                     unselectedItemColor: ColorConst.black,
-                    selectedItemColor: ColorConst.primerycolor),
+                    selectedItemColor: ColorConst.Grey),
                 togglerTheme: SideNavigationBarTogglerTheme(
-                    expandIconColor: ColorConst.primerycolor),
+                    expandIconColor: ColorConst.Grey),
                 dividerTheme: SideNavigationBarDividerTheme.standard()),
             footer: SideNavigationBarFooter(
                 label: InkWell(
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: w * 0.013,
-                    color: ColorConst.primerycolor),
+                    color: ColorConst.Grey),
               ),
               subtitle: Padding(
                 padding: EdgeInsets.only(left: w * 0.001,top: w*0.001),
@@ -196,9 +196,9 @@ class _HomePageState extends State<HomePage> {
             theme: SideNavigationBarTheme(
                 itemTheme: SideNavigationBarItemTheme(
                     unselectedItemColor: ColorConst.black,
-                    selectedItemColor: ColorConst.primerycolor),
+                    selectedItemColor: ColorConst.Grey),
                 togglerTheme: SideNavigationBarTogglerTheme(
-                    expandIconColor: ColorConst.primerycolor),
+                    expandIconColor: ColorConst.Grey),
                 dividerTheme: SideNavigationBarDividerTheme.standard()),
             footer: SideNavigationBarFooter(
                 label: InkWell(
@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: w * 0.013,
-                    color: ColorConst.primerycolor),
+                    color: ColorConst.Grey),
               ),
               subtitle: Padding(
                 padding: EdgeInsets.only(left: w * 0.01),
