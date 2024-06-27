@@ -9,6 +9,7 @@ import 'package:foodapp/feature/adding_banner/screen/banner_page.dart';
 
 import 'package:foodapp/home/home_page.dart';
 import 'package:foodapp/feature/admin_adding/screen/admin_page.dart';
+import 'package:foodapp/sidemenu%20part/dashboard.dart';
 import 'package:foodapp/splash/screen/Splash_Screen.dart';
 
 import 'firebase_options.dart';

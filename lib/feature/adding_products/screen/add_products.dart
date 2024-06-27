@@ -15,6 +15,7 @@ import 'package:foodapp/models/items_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../constans/color_const.dart';
+import '../../../constans/setsearchparam.dart';
 import '../../../constans/snack_bar_page.dart';
 import '../../../main.dart';
 import '../../users streem/condroller/streem_condroller.dart';
@@ -124,7 +125,7 @@ addingItemsss(){
         Fav: [],
       categoryId: widget.category.id,
       CategoryName: categoryController.text,
-      search: [],
+      search: setSearchParam(nameController.text.trim()),
 
     );
     print("id-----------------------------------$categoryId");

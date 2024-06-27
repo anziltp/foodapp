@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:foodapp/constans/color_const.dart';
 import 'package:foodapp/constans/image_const.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 import '../main.dart';
 class _SalesData {
@@ -247,37 +248,7 @@ class _DashboredState extends State<Dashbored> {
                 ),
               ],
             ),
-            Padding(
-              padding:  EdgeInsets.all(w*0.01),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                 Container(
-                   height: w*0.33,
-                   width: w*0.45,
-                   decoration: BoxDecoration(
-                       color: Colors.white,
-                     boxShadow: [BoxShadow(color: Colors.black,blurRadius: w*0.001)],
-                     borderRadius: BorderRadius.circular(w*0.03)
-                   ),
-child: SfCartesianChart(
-    primaryXAxis: CategoryAxis(),
-    // Chart title
-    title: ChartTitle(text: 'Half yearly sales analysis'),
-    // Enable legend
-    legend: Legend(isVisible: true),
-    // Enable tooltip
-    tooltipBehavior: TooltipBehavior(enable: true),
-    series: <CartesianSeries<_SalesData, String>>[
-      LineSeries<_SalesData, String>(
-          dataSource: data,
-          xValueMapper: (_SalesData sales, _) => sales.year,
-          yValueMapper: (_SalesData sales, _) => sales.sales,
-          name: 'Sales',
-          // Enable data label
-          dataLabelSettings: DataLabelSettings(isVisible: true))
-    ]),
-                 ),
+
                   Column(
                     children: [
                       Container(
@@ -349,10 +320,9 @@ child: SfCartesianChart(
                 ],
               ),
             )
-          ],
+
           ///fgfgf
-        ),
-      ),
+
     );
   }
 }
