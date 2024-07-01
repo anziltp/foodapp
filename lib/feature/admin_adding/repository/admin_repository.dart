@@ -19,8 +19,16 @@ class AdminRepository {
   }
 
   admin(email,password,role,id){
-    AdminModel adminModel=AdminModel( email: email, name: password,role: role, id: id);
+    AdminModel adminModel=AdminModel( email: email, password: password,role: role, id: id);
     _admins.add(adminModel.toMap()).then((value){
       value.update(adminModel.copyWith(id: value.id).toMap());
     });
-}}
+
+}
+  deleteAdmin(String id){
+    _admins.doc(id).delete();
+  }
+  changaAdmin(AdminModel adminModel){
+    _admins.doc(adminModel.id).update(adminModel.toMap());
+  }
+}

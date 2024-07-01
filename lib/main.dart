@@ -44,7 +44,7 @@ class FoodApp extends StatelessWidget {
       child: MaterialApp(
 
         debugShowCheckedModeBanner: false,
-        home: const HomePage() ,
+        home: const SplashScreen() ,
         theme: ThemeData(
         ),
       ),
