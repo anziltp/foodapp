@@ -56,6 +56,7 @@ class _ChangeAdminState extends ConsumerState<ChangeAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         elevation: 0,
       ),
